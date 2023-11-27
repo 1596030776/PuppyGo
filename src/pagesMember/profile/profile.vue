@@ -32,7 +32,7 @@ const onAvatarChange = () => {
       const { tempFilePath } = res.tempFiles[0]
       // 文件上传
       uni.uploadFile({
-        url: '/member/profile/avatar',
+        url: '/user/profile/avatar',
         name: 'file', // 后端数据字段名
         filePath: tempFilePath, // 新头像
         success: (res) => {
@@ -40,14 +40,17 @@ const onAvatarChange = () => {
           if (res.statusCode === 200) {
             // 提取头像
             const { avatar } = JSON.parse(res.data).result
+            console.log(JSON.parse(res.data).result.avator)
             // 当前页面更新头像
-            profile.value!.avatar = avatar
+            profile.value!.avatar = JSON.parse(res.data).result.avator
             // 更新 Store 头像
-            memberStore.profile!.avatar = avatar
+            memberStore.profile!.avatar = JSON.parse(res.data).result.avator
             uni.showToast({ icon: 'success', title: '更新成功' })
           } else {
             uni.showToast({ icon: 'error', title: '出现错误' })
           }
+          console.log('更改图像返回的信息为：')
+          console.log(res)
         },
       })
     },
@@ -74,12 +77,13 @@ const onFullLocationChange: UniHelper.RegionPickerOnChange = (ev) => {
 }
 
 const onSubmit = async () => {
-  const { nickname, gender, birthday, profession } = profile.value
+  const { nickname, gender, birthday, profession, fullLocation } = profile.value
   const result = await putMemberProfileAPI({
     nickname,
     gender,
     birthday,
     profession,
+    fullLocation,
   })
   memberStore.profile!.nickname = result.result.nickname
   uni.showToast({
@@ -100,7 +104,8 @@ const onSubmit = async () => {
     <!-- 头像 -->
     <view class="avatar" @tap="onAvatarChange">
       <view class="avatar-content">
-        <image class="image" :src="profile?.avatar" mode="aspectFill" />
+        <image class="image" :src="profile.avatar" mode="aspectFill" />
+        <view>{{ profile!.avatar }}</view>
         <text class="text">点击修改头像</text>
       </view>
     </view>

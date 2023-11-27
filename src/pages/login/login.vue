@@ -15,7 +15,6 @@ const onGetphonenumber: UniHelper.ButtonOnGetphonenumber = async (ev) => {
   // 获取参数
   const encryptedData = ev.detail.encryptedData!
   const iv = ev.detail.iv!
-
   // 登录请求
   await postLoginWxMinAPI({ code, encryptedData, iv })
   // 成功提示

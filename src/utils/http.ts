@@ -23,8 +23,9 @@ const httpInterceptor = {
     const memberStore = useMemberStore()
     const token = memberStore.profile?.token
     if (token) {
-      options.header.Authorization = token
+      options.header.Authorization = 'Bearer ' + token
     }
+    console.log('发送的请求数据如下：')
     console.log(options)
   },
 }
@@ -78,6 +79,8 @@ export const http = <T>(options: UniApp.RequestOptions) => {
           })
           reject(res)
         }
+        console.log('返回的信息如下')
+        console.log(res.data)
       },
       // 响应失败
       fail(err) {

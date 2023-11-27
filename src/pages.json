@@ -74,6 +74,9 @@
     {
       // 子包的根目录
       "root": "pagesMember",
+      "easycom": {
+        "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+      },
       // 页面路径和窗口表现
       "pages": [
         {
@@ -88,6 +91,12 @@
             "navigationStyle": "custom",
             "navigationBarTextStyle": "white",
             "navigationBarTitleText": "个人信息页"
+          }
+        },
+        {
+          "path": "logpet/logpet",
+          "style": {
+            "navigationBarTitleText": "登记宠物"
           }
         }
       ]

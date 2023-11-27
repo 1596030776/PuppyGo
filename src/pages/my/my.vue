@@ -21,6 +21,7 @@ const memberStore = useMemberStore()
       <view class="overview" v-if="memberStore.profile">
         <navigator url="/pagesMember/profile/profile" hover-class="none">
           <image class="avatar" mode="aspectFill" :src="memberStore.profile.avatar"></image>
+          <view>{{ memberStore.profile.avatar }}</view>
         </navigator>
         <view class="meta">
           <view class="nickname">{{
@@ -54,7 +55,9 @@ const memberStore = useMemberStore()
       </navigator>
     </view>
     <!-- 宠物列表 -->
-    <view class="pets"> </view>
+    <view class="pets">
+      <navigator url="/pagesMember/logpet/logpet" hover-class="none"> 登记宠物 </navigator></view
+    >
   </scroll-view>
 </template>
 
