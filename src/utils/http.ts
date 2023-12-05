@@ -3,7 +3,8 @@ import { useMemberStore } from '@/stores'
 
 // 请求基地址
 // const baseURL = 'https://pcapi-xiaotuxian-front-devtest.itheima.net'
-const baseURL = 'http://8.140.57.220:8889/puppygo'
+// const baseURL = 'http://8.140.57.220:8889/puppygo'
+const baseURL = 'http://localhost:8080/puppygo'
 // 拦截器配置
 const httpInterceptor = {
   // 拦截前触发
@@ -13,7 +14,7 @@ const httpInterceptor = {
       options.url = baseURL + options.url
     }
     // 2. 请求超时
-    options.timeout = 10000
+    options.timeout = 3000
     // 3. 添加小程序端请求头标识
     options.header = {
       'source-client': 'miniapp',

@@ -3,13 +3,6 @@ import { useMemberStore } from '@/stores'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
-// 订单选项
-const orderTypes = [
-  { type: 1, text: '待付款', icon: 'icon-currency' },
-  { type: 2, text: '待发货', icon: 'icon-gift' },
-  { type: 3, text: '待收货', icon: 'icon-check' },
-  { type: 4, text: '待评价', icon: 'icon-comment' },
-]
 const memberStore = useMemberStore()
 </script>
 
@@ -21,7 +14,6 @@ const memberStore = useMemberStore()
       <view class="overview" v-if="memberStore.profile">
         <navigator url="/pagesMember/profile/profile" hover-class="none">
           <image class="avatar" mode="aspectFill" :src="memberStore.profile.avatar"></image>
-          <view>{{ memberStore.profile.avatar }}</view>
         </navigator>
         <view class="meta">
           <view class="nickname">{{
@@ -55,6 +47,7 @@ const memberStore = useMemberStore()
       </navigator>
     </view>
     <!-- 宠物列表 -->
+
     <view class="pets">
       <navigator url="/pagesMember/logpet/logpet" hover-class="none"> 登记宠物 </navigator></view
     >

@@ -40,7 +40,6 @@ const onAvatarChange = () => {
           if (res.statusCode === 200) {
             // 提取头像
             const { avatar } = JSON.parse(res.data).result
-            console.log(JSON.parse(res.data).result.avator)
             // 当前页面更新头像
             profile.value!.avatar = JSON.parse(res.data).result.avator
             // 更新 Store 头像
@@ -105,7 +104,6 @@ const onSubmit = async () => {
     <view class="avatar" @tap="onAvatarChange">
       <view class="avatar-content">
         <image class="image" :src="profile.avatar" mode="aspectFill" />
-        <view>{{ profile!.avatar }}</view>
         <text class="text">点击修改头像</text>
       </view>
     </view>
