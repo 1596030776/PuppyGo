@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { safeAreaInsets } = uni.getSystemInfoSync()
+const now = new Date()
+const weekInfo = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
 </script>
 
 <template>
@@ -8,8 +10,10 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
     <view class="navbar">
       <!-- logo文字 -->
       <view class="top-date">
-        <view class="date">11月25日 星期六</view>
-        <view class="today">Today</view>
+        <view class="date"
+          >{{ now.getMonth() + 1 }}月{{ now.getDate() }}日 {{ weekInfo[now.getDay() - 1] }}</view
+        >
+        <view class="today">宠物新闻</view>
       </view>
     </view>
   </view>
@@ -17,10 +21,18 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
 
 <style lang="scss">
 @font-face {
-  font-family: '阿里巴巴普惠体 2.0 85 Bold';
-  font-weight: 700;
-  src: url('//at.alicdn.com/wf/webfont/9edW9TPe7adf/wlOQAJsxV9wl.woff2') format('woff2'),
-    url('//at.alicdn.com/wf/webfont/9edW9TPe7adf/UeonckFyQWDy.woff') format('woff');
+  font-family: '阿里妈妈刀隶体 Regular';
+  font-weight: 400;
+  src: url('//at.alicdn.com/wf/webfont/9edW9TPe7adf/nSsvIQ90FwF9.woff2') format('woff2'),
+    url('//at.alicdn.com/wf/webfont/9edW9TPe7adf/BhJYLrMOaAhY.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '阿里妈妈东方大楷 Regular';
+  font-weight: 400;
+  src: url('//at.alicdn.com/wf/webfont/9edW9TPe7adf/75iyijn15s6K.woff2') format('woff2'),
+    url('//at.alicdn.com/wf/webfont/9edW9TPe7adf/D6aEx30EIe3p.woff') format('woff');
   font-display: swap;
 }
 /* 自定义导航条 */
@@ -37,11 +49,11 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
       margin-left: 40rpx;
       .date {
         color: #969696;
-        font-family: '阿里巴巴普惠体 2.0 85 Bold';
+        font-family: '阿里妈妈东方大楷 Regular';
       }
       .today {
-        font-size: 82rpx;
-        font-family: '阿里巴巴普惠体 2.0 85 Bold';
+        font-size: 68rpx;
+        font-family: '阿里妈妈东方大楷 Regular';
       }
     }
   }

@@ -4,23 +4,30 @@ import MyPetList from './components/MyPetList.vue'
 
 const list = [
   {
-    image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-    title: '昨夜星辰昨夜风，画楼西畔桂堂东',
+    image: 'https://f.chongwunet.com/chongwunet/202312/0f/4b35ec7438b783.png',
+    title: '点指名犬——你所不知道的彭布罗克威尔士柯基',
   },
   {
-    image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-    title: '身无彩凤双飞翼，心有灵犀一点通',
+    image: 'https://f.chongwunet.com/chongwunet/202312/8a/27d1c38426d140.png',
+    title: '为什么说章鱼是外星生物？读完你就服了！',
   },
   {
-    image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-    title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳',
+    image: 'https://f.chongwunet.com/chongwunet/202312/5c/cbcb79d3d50a4e.png',
+    title: '家养蜥蜴饲养小技巧',
   },
 ]
 </script>
 <template>
   <CustomNavbar></CustomNavbar>
   <view class="wrap">
-    <u-swiper :list="list"></u-swiper>
+    <u-swiper
+      title="true"
+      bg-color="#fff"
+      height="400"
+      :list="list"
+      border-radius="22"
+      :effect3d="true"
+    ></u-swiper>
   </view>
   <MyPetList></MyPetList>
 </template>

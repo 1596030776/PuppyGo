@@ -1,196 +1,162 @@
+<!-- 瀑布流布局 -->
 <template>
-  <!-- <view v-for="pet in petStore.petsInfo" :key="pet.id">
-    <view class="pet">
-      <image class="pet-image" :src="pet.picture" mode="aspectFill"></image>
-      <view class="pet-info"
-        ><view>{{ pet.name }}</view>
-      </view>
+  <view class="container">
+    <view
+      :id="`cont_${index + 1}`"
+      class="cont-box"
+      :style="{ width: widthCalc, 'margin-left': index === 0 ? 0 : marginCalc }"
+      v-for="(numVal, index) in flowData.column"
+      :key="numVal"
+    >
+      <navigator url="/pagesMember/petDetail/petDetail" hover-class="none">
+        <view
+          class="item-box"
+          v-for="(item, j) in flowData[`column_${index + 1}`]"
+          :key="j"
+          @tap="petStore.curPet = item"
+        >
+          <image
+            class="img-tip"
+            :src="item.picture"
+            mode="widthFix"
+            lazy-load
+            @load="imgLoad(item)"
+            @error="imgError(item)"
+          />
+          <view class="tit-tip multi-line-omit">{{ item.name }}</view>
+          <view class="desc-tip multi-line-omit">{{ item.description }}</view>
+        </view>
+      </navigator>
     </view>
-  </view> -->
-  <view class="wrap">
-    <u-waterfall v-model="list" ref="uWaterfall">
-      <template v-slot:left="{ leftList }">
-        <view class="demo-warter" v-for="(item, index) in leftList" :key="index">
-          <!-- 警告：微信小程序中需要hx2.8.11版本才支持在template中结合其他组件，比如下方的lazy-load组件 -->
-          <u-lazy-load
-            threshold="-450"
-            border-radius="10"
-            :image="item.image"
-            :index="index"
-          ></u-lazy-load>
-          <view class="demo-title">
-            {{ item.title }}
-          </view>
-          <view class="demo-price"> {{ item.price }}元 </view>
-          <view class="demo-tag">
-            <view class="demo-tag-owner"> 自营 </view>
-            <view class="demo-tag-text"> 放心购 </view>
-          </view>
-          <view class="demo-shop">
-            {{ item.shop }}
-          </view>
-        </view>
-      </template>
-      <template v-slot:right="{ rightList }">
-        <view class="demo-warter" v-for="(item, index) in rightList" :key="index">
-          <u-lazy-load
-            threshold="-450"
-            border-radius="10"
-            :image="item.image"
-            :index="index"
-          ></u-lazy-load>
-          <view class="demo-title">
-            {{ item.title }}
-          </view>
-          <view class="demo-price"> {{ item.price }}元 </view>
-          <view class="demo-tag">
-            <view class="demo-tag-owner"> 自营 </view>
-            <view class="demo-tag-text"> 放心购 </view>
-          </view>
-          <view class="demo-shop">
-            {{ item.shop }}
-          </view>
-        </view>
-      </template>
-    </u-waterfall>
-    <u-loadmore bg-color="rgb(240, 240, 240)" :status="loadStatus"></u-loadmore>
   </view>
 </template>
 
-<script lang="ts" setup>
+<script setup>
+import { reactive, computed, getCurrentInstance, onMounted } from 'vue'
 import { usePetStore } from '@/stores/modules/pet'
-import UWaterfall from '@/components/u-waterfall/u-waterfall.vue'
-import { getCurrentInstance } from 'vue'
+
 const petStore = usePetStore()
-const loadStatus = 'loadmore'
-const list = [
-  {
-    price: 35,
-    title: '北国风光，千里冰封，万里雪飘',
-    shop: '李白杜甫白居易旗舰店',
-    image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg',
-  },
-  {
-    price: 75,
-    title: '望长城内外，惟余莽莽',
-    shop: '李白杜甫白居易旗舰店',
-    image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg',
-  },
-  {
-    price: 385,
-    title: '大河上下，顿失滔滔',
-    shop: '李白杜甫白居易旗舰店',
-    image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',
-  },
-  {
-    price: 784,
-    title: '欲与天公试比高',
-    shop: '李白杜甫白居易旗舰店',
-    image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg',
-  },
-  {
-    price: 7891,
-    title: '须晴日，看红装素裹，分外妖娆',
-    shop: '李白杜甫白居易旗舰店',
-    image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg',
-  },
-  {
-    price: 2341,
-    shop: '李白杜甫白居易旗舰店',
-    title: '江山如此多娇，引无数英雄竞折腰',
-    image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23346_s.jpg',
-  },
-  {
-    price: 661,
-    shop: '李白杜甫白居易旗舰店',
-    title: '惜秦皇汉武，略输文采',
-    image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23344_s.jpg',
-  },
-  {
-    price: 1654,
-    title: '唐宗宋祖，稍逊风骚',
-    shop: '李白杜甫白居易旗舰店',
-    image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-  },
-  {
-    price: 1678,
-    title: '一代天骄，成吉思汗',
-    shop: '李白杜甫白居易旗舰店',
-    image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-  },
-  {
-    price: 924,
-    title: '只识弯弓射大雕',
-    shop: '李白杜甫白居易旗舰店',
-    image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-  },
-  {
-    price: 8243,
-    title: '俱往矣，数风流人物，还看今朝',
-    shop: '李白杜甫白居易旗舰店',
-    image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-  },
-]
+const _this = getCurrentInstance()
+const flowData = reactive({
+  list: [], // 数据值
+  column: 2, // 瀑布列数
+  columnSpace: 2, // 瀑布列宽间距
+})
+/* 数据赋值 */
+flowData.list = petStore.petsInfo
+/* 初始化每一列的数据 */
+for (let i = 1; i <= flowData.column; i++) {
+  flowData[`column_${i}`] = []
+}
+/* 生命周期函数-实例被挂载后调用 */
+onMounted(() => {
+  initValue(0)
+})
+/* 计算列宽 */
+const widthCalc = computed(() => {
+  return `${100 / flowData.column - flowData.columnSpace}%`
+})
+/* 计算 margin 外边距 */
+const marginCalc = computed(() => {
+  const columnWidth = 100 / flowData.column - flowData.columnSpace
+  return `${(100 - columnWidth.toFixed(5) * flowData.column) / (flowData.column - 1)}%`
+})
+/* 获取最小值的对象 */
+const getMinObj = (a, s) => {
+  let m = a[0][s]
+  let mo = a[0]
+  for (let i = a.length - 1; i >= 0; i--) {
+    if (a[i][s] < m) m = a[i][s]
+  }
+  mo = a.filter((i) => i[s] === m)
+  return mo[0]
+}
+/* 计算每列的高度 */
+function getMinColumnHeight() {
+  return new Promise((resolve) => {
+    const heightArr = []
+    for (let i = 1; i <= flowData.column; i++) {
+      uni
+        .createSelectorQuery()
+        .in(_this)
+        .select(`#cont_${i}`)
+        .boundingClientRect((res) => {
+          heightArr.push({ column: i, height: res.height })
+        })
+        .exec(() => {
+          if (flowData.column <= heightArr.length) {
+            resolve(getMinObj(heightArr, 'height'))
+          }
+        })
+    }
+  })
+}
+/* 初始化瀑布流数据 */
+async function initValue(i) {
+  if (i >= flowData.list.length) return false
+  const minHeightRes = await getMinColumnHeight()
+  flowData[`column_${minHeightRes.column}`].push({
+    ...flowData.list[i],
+    index: i,
+  })
+}
+/* 图片加载完成 */
+function imgLoad(item) {
+  const i = item.index
+  initValue(i + 1) // 加载下一条数据
+}
+/* 图片加载失败 */
+function imgError(item) {
+  const i = item.index
+  initValue(i + 1) // 加载下一条数据
+}
 </script>
 
-<style scoped>
-.demo-warter {
-  border-radius: 8px;
-  margin: 5px;
-  background-color: #ffffff;
-  padding: 8px;
-  position: relative;
+<style lang="scss" scoped>
+.container {
+  padding: 20rpx;
+  .cont-box {
+    $borderRadius: 12rpx;
+    float: left;
+    .item-box {
+      width: 100%;
+      padding-bottom: 20rpx;
+      margin-bottom: 30rpx;
+      border-radius: $borderRadius;
+      box-shadow: 0rpx 3rpx 6rpx rgba(0, 46, 37, 0.08);
+      .img-tip {
+        width: 100%;
+        border-radius: $borderRadius $borderRadius 0 0;
+      }
+      .tit-tip {
+        text-align: justify;
+        font-size: 30rpx;
+        padding: 10rpx 20rpx 0;
+        font-weight: 900;
+      }
+      .desc-tip {
+        text-align: justify;
+        font-size: 26rpx;
+        padding: 5rpx 20rpx 0;
+        margin-top: 10rpx;
+      }
+    }
+  }
 }
-
-.u-close {
-  position: absolute;
-  top: 32rpx;
-  right: 32rpx;
+/* 多行省略 */
+.multi-line-omit {
+  word-break: break-all; // 允许单词内自动换行，如果一个单词很长的话
+  text-overflow: ellipsis; // 溢出用省略号显示
+  overflow: hidden; // 超出的文本隐藏
+  display: -webkit-box; // 作为弹性伸缩盒子模型显示
+  -webkit-line-clamp: 2; // 显示的行
+  -webkit-box-orient: vertical; // 设置伸缩盒子的子元素排列方式--从上到下垂直排列
 }
-
-.demo-image {
-  width: 100%;
-  border-radius: 4px;
-}
-
-.demo-title {
-  font-size: 30rpx;
-  margin-top: 5px;
-}
-
-.demo-tag {
-  display: flex;
-  margin-top: 5px;
-}
-
-.demo-tag-owner {
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  padding: 4rpx 14rpx;
-  border-radius: 50rpx;
-  font-size: 20rpx;
-  line-height: 1;
-}
-
-.demo-tag-text {
-  margin-left: 10px;
-  border-radius: 50rpx;
-  line-height: 1;
-  padding: 4rpx 14rpx;
-  display: flex;
-  align-items: center;
-  border-radius: 50rpx;
-  font-size: 20rpx;
-}
-
-.demo-price {
-  font-size: 30rpx;
-  margin-top: 5px;
-}
-
-.demo-shop {
-  font-size: 22rpx;
-  margin-top: 5px;
+/* 单行省略 */
+.one-line-omit {
+  width: 100%; // 宽度100%：1vw等于视口宽度的1%；1vh等于视口高度的1%
+  white-space: nowrap; // 溢出不换行
+  overflow: hidden; // 超出的文本隐藏
+  text-overflow: ellipsis; // 溢出用省略号显示
 }
 </style>

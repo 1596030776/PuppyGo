@@ -2,12 +2,19 @@
   <view>录入宠物信息</view>
   <view class="form">
     <view class="form-content">
-      <view class="avatar">
+      <uni-file-picker
+        v-model="filePath"
+        file-mediatype="image"
+        mode="grid"
+        file-extname="png,jpg"
+        :limit="1"
+      />
+      <!-- <view class="avatar">
         <view class="avatar-content" @tap="onChoosePhone">
           <text class="text">宠物照片</text>
           <image class="image" :src="filePath" mode="aspectFill" />
         </view>
-      </view>
+      </view> -->
       <view class="form-item">
         <text class="label">宠物名：</text>
         <input class="input" type="text" placeholder="请填写宠物名" v-model="petInfo!.name" />
@@ -166,7 +173,6 @@ const onChoosePhone = () => {
       // 本地路径
       const { tempFilePath } = res.tempFiles[0]
       filePath.value = tempFilePath
-      console.log(filePath.value)
     },
   })
 }

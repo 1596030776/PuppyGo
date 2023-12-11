@@ -40,67 +40,94 @@
           ></textarea>
         </view>
         <button @click="handleSend" class="send-btn">发送</button>
+        <image
+          @tap="onChoosePhone"
+          class="add-picture"
+          mode="aspectFill"
+          src="../../static/images/ts-picture.png"
+        ></image>
       </view>
     </view>
   </view>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      //滚动距离
-      scrollTop: 0,
-      userId: '',
-      //发送的消息
-      chatMsg: '',
-      msgList: [
-        {
-          botContent: 'hello，请问我有什么可以帮助你的吗？',
-          recordId: 0,
-          titleId: 0,
-          userContent: '999',
-          userId: 0,
-        },
-        {
-          botContent: '6666',
-          recordId: 0,
-          titleId: 0,
-          userContent: '你好呀我想问你一件事',
-          userId: 0,
-        },
-      ],
+<script setup>
+import { ref } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
+import { initConservationAPI, postFragment, getStatue } from '@/services/chat'
+import { useChatStore } from '@/stores/modules/chat'
+
+const filePath = ref('')
+const chatStore = useChatStore()
+const scrollTop = 0
+const userId = ref('')
+//发送的消息
+const chatMsg = ref('')
+const msgList = ref([
+  {
+    botContent: 'hello，请问我有什么可以帮助你的吗？',
+    recordId: 0,
+    titleId: 0,
+    userContent: '999',
+    userId: 0,
+  },
+  {
+    botContent: '6666',
+    recordId: 0,
+    titleId: 0,
+    userContent: '你好呀我想问你一件事',
+    userId: 0,
+  },
+])
+
+onLoad(async () => {
+  const result = await initConservationAPI()
+  chatStore.conservation = result.result
+})
+
+const onChoosePhone = () => {
+  // 调用拍照/选择图片
+  uni.chooseMedia({
+    // 文件个数
+    count: 1,
+    // 文件类型
+    mediaType: ['image'],
+    success: (res) => {
+      // 本地路径
+      const { tempFilePath } = res.tempFiles[0]
+      filePath.value = tempFilePath
+    },
+  })
+}
+const windowHeight = () => {
+  return proxy.rpxTopx(uni.getSystemInfoSync().windowHeight)
+}
+
+const rpxTopx = (px) => {
+  let deviceWidth = wx.getSystemInfoSync().windowWidth
+  let rpx = (750 / deviceWidth) * Number(px)
+  return Math.floor(rpx)
+}
+// 发送消息
+const handleSend = async () => {
+  //如果消息不为空
+  if (!chatMsg.value || !/^\s+$/.test(chatMsg.value)) {
+    let obj = {
+      botContent: '',
+      recordId: 0,
+      titleId: 0,
+      userContent: chatMsg.value,
+      userId: 0,
     }
-  },
-  computed: {
-    windowHeight() {
-      return this.rpxTopx(uni.getSystemInfoSync().windowHeight)
-    },
-  },
-  methods: {
-    // px转换成rpx
-    rpxTopx(px) {
-      let deviceWidth = wx.getSystemInfoSync().windowWidth
-      let rpx = (750 / deviceWidth) * Number(px)
-      return Math.floor(rpx)
-    },
-    // 发送消息
-    handleSend() {
-      //如果消息不为空
-      if (!this.chatMsg || !/^\s+$/.test(this.chatMsg)) {
-        let obj = {
-          botContent: '',
-          recordId: 0,
-          titleId: 0,
-          userContent: this.chatMsg,
-          userId: 0,
-        }
-        this.msgList.push(obj)
-        this.chatMsg = ''
-      } else {
-        this.$modal.showToast('不能发送空白消息')
-      }
-    },
-  },
+    msgList.value.push(obj)
+    const sentenceResult = await postFragment(chatStore.conservation.id, chatMsg.value)
+    setInterval(async () => {
+      const statueResult = await getStatue(sentenceResult.result)
+      console.log(statueResult.result)
+    }, 2000)
+    chatMsg.value = ''
+  } else {
+    showToast('不能发送空白消息')
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -217,7 +244,7 @@ textarea {
 
     .send-msg {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       padding: 16rpx 30rpx;
       width: 100%;
       min-height: 120rpx;
@@ -228,7 +255,7 @@ textarea {
 
     .uni-textarea {
       textarea {
-        width: 537rpx;
+        width: 500rpx;
         min-height: 75rpx;
         max-height: 500rpx;
         background: #ffffff;
@@ -246,15 +273,21 @@ textarea {
       align-items: center;
       justify-content: center;
       margin-left: 25rpx;
-      width: 128rpx;
-      height: 75rpx;
+      width: 100rpx;
+      height: 70rpx;
       background: $sendBtnbgc;
       border-radius: 8rpx;
-      font-size: 28rpx;
+      font-size: 24rpx;
       font-family: PingFang SC;
       font-weight: 500;
       color: #ffffff;
       line-height: 28rpx;
+    }
+
+    .add-picture {
+      margin-left: 15rpx;
+      height: 50rpx;
+      width: 50rpx;
     }
   }
 }

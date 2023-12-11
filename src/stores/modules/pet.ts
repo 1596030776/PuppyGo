@@ -8,6 +8,7 @@ export const usePetStore = defineStore(
   () => {
     //宠物信息
     const petsInfo = ref<PetInfoList>()
+    const curPet = ref<PetInfo>()
 
     const setPetsInfo = (val: PetInfoList) => {
       petsInfo.value = val
@@ -20,6 +21,7 @@ export const usePetStore = defineStore(
     // 记得 return
     return {
       petsInfo,
+      curPet,
       setPetsInfo,
       clearPetsInfo,
     }
