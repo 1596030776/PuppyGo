@@ -1,36 +1,65 @@
 <script setup lang="ts">
 import CustomNavbar from './components/CustomNavbar.vue'
 import MyPetList from './components/MyPetList.vue'
+import { usePetStore } from '@/stores/modules/pet'
 
-const list = [
-  {
-    image: 'https://f.chongwunet.com/chongwunet/202312/0f/4b35ec7438b783.png',
-    title: '点指名犬——你所不知道的彭布罗克威尔士柯基',
-  },
-  {
-    image: 'https://f.chongwunet.com/chongwunet/202312/8a/27d1c38426d140.png',
-    title: '为什么说章鱼是外星生物？读完你就服了！',
-  },
-  {
-    image: 'https://f.chongwunet.com/chongwunet/202312/5c/cbcb79d3d50a4e.png',
-    title: '家养蜥蜴饲养小技巧',
-  },
-]
+// const navigateOut = (index: number) => {
+//   uni.navigateTo({ url: petStore.newsList![index].newsUrl })
+// }
+const petStore = usePetStore()
 </script>
 <template>
-  <CustomNavbar></CustomNavbar>
-  <view class="wrap">
-    <u-swiper
-      title="true"
-      bg-color="#fff"
-      height="400"
-      :list="list"
-      border-radius="22"
-      :effect3d="true"
-    ></u-swiper>
-  </view>
-  <MyPetList></MyPetList>
+  <scroll-view class="viewport" scroll-y enable-back-to-top>
+    <CustomNavbar></CustomNavbar>
+    <view class="wrap">
+      <u-swiper
+        title="true"
+        bg-color="#fff"
+        height="700"
+        :list="petStore.newsList"
+        border-radius="22"
+        :effect3d="true"
+      ></u-swiper>
+    </view>
+    <view class="bar">
+      <view class="link-top"></view>
+    </view>
+    <view class="my-pet">我的宠物</view>
+    <MyPetList></MyPetList>
+  </scroll-view>
 </template>
 <style lang="scss">
-//
+@font-face {
+  font-family: '阿里妈妈东方大楷 Regular';
+  font-weight: 400;
+  src: url('//at.alicdn.com/wf/webfont/9edW9TPe7adf/HeqZ4L2P0112.woff2') format('woff2'),
+    url('//at.alicdn.com/wf/webfont/9edW9TPe7adf/vxeZ094J2OLz.woff') format('woff');
+  font-display: swap;
+}
+.wrap {
+  margin-bottom: 40rpx;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.link-top {
+  width: 80%;
+
+  border-top: solid #a1bcdd 3px;
+  border-radius: 30rpx;
+}
+.my-pet {
+  font-family: '阿里妈妈东方大楷 Regular';
+  margin: 40rpx;
+  font-size: 50rpx;
+}
+.viewport {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: auto;
+  display: flex;
+  background-color: rgb(248, 248, 248);
+}
 </style>

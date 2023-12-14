@@ -8,7 +8,8 @@ type BaseProfile = {
   /** 账户名  */
   account: string
   /** 昵称 */
-  nickname?: string
+  nickname: string
+  nikename: string
 }
 /** 小程序登录 登录用户信息 */
 export type LoginResult = BaseProfile & {

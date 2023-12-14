@@ -1,5 +1,3 @@
-// src/pagesMember/settings/settings.vue
-
 <script setup lang="ts">
 import { useMemberStore } from '@/stores'
 

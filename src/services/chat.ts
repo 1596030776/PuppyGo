@@ -2,16 +2,13 @@ import { http } from '@/utils/http'
 /**
  * 关于聊天的接口
  */
-import type { Conservation } from '@/types/chat'
+import type { Conservation, Answer } from '@/types/chat'
 
 /**创建对话 */
-export const initConservationAPI = () => {
+export const initConservationAPI = (petId: number) => {
   return http<Conservation>({
     method: 'POST',
-    url: '/conversation',
-    data: {
-      petId: 3,
-    },
+    url: `/conversation/${petId}`,
   })
 }
 
@@ -19,11 +16,7 @@ export const initConservationAPI = () => {
 export const postFragment = (conversationId: number, question: string) => {
   return http<number>({
     method: 'POST',
-    url: '/conversation/fragment',
-    data: {
-      conversationId,
-      question,
-    },
+    url: `/conversation/fragment?conversationId=${conversationId}&question=${question}`,
   })
 }
 
@@ -35,5 +28,22 @@ export const getStatue = (fragmentId: number) => {
     data: {
       fragmentId,
     },
+  })
+}
+
+// "answer": "string",
+// "conversationId": 0,
+// "id": 0,
+// "imgResult": "string",
+// "imgUrl": "string",
+// "knowledgeResult": "string",
+// "question": "string",
+// "statue": "DB_INSERT_FAILED"
+
+/**获取状态 */
+export const getAnswer = (fragmentId: number) => {
+  return http<Answer>({
+    method: 'GET',
+    url: `/conversation/fragment/${fragmentId}`,
   })
 }

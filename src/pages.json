@@ -37,6 +37,7 @@
     {
       "path": "pages/robot/robot",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "智能助手"
       }
     }
@@ -103,6 +104,8 @@
         {
           "path": "petDetail/petDetail",
           "style": {
+            "navigationStyle": "custom",
+            "navigationBarTextStyle": "white",
             "navigationBarTitleText": "宠物详细信息"
           }
         }

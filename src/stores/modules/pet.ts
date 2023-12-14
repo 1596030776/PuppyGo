@@ -1,4 +1,4 @@
-import type { PetInfo, PetInfoList } from '@/types/pet'
+import type { PetInfo, PetInfoList, list } from '@/types/pet'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -8,7 +8,8 @@ export const usePetStore = defineStore(
   () => {
     //宠物信息
     const petsInfo = ref<PetInfoList>()
-    const curPet = ref<PetInfo>()
+    const curPet = ref<PetInfo>({} as PetInfo)
+    const newsList = ref<list>()
 
     const setPetsInfo = (val: PetInfoList) => {
       petsInfo.value = val
@@ -22,6 +23,7 @@ export const usePetStore = defineStore(
     return {
       petsInfo,
       curPet,
+      newsList,
       setPetsInfo,
       clearPetsInfo,
     }

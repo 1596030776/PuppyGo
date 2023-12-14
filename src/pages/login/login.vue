@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { postLoginWxMinAPI, postLoginWxMinSimpleAPI } from '@/services/login'
+import { getPetNewsAPI } from '@/services/pet'
 import { useMemberStore } from '@/stores'
 import { usePetStore } from '@/stores/modules/pet'
 import { getPetInfoAPI } from '@/services/pet'
@@ -31,6 +32,8 @@ const onGetphonenumberSimple = async () => {
   const result2 = await getPetInfoAPI()
   const petStore = usePetStore()
   petStore.setPetsInfo(result2.result.pets)
+  const result3 = await getPetNewsAPI()
+  petStore.newsList = result3.result.splice(0, 3)
   setTimeout(() => {
     // 页面跳转
     uni.switchTab({ url: '/pages/my/my' })

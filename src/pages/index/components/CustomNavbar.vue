@@ -48,11 +48,12 @@ const weekInfo = ['星期一', '星期二', '星期三', '星期四', '星期五
     .top-date {
       margin-left: 40rpx;
       .date {
-        color: #969696;
-        font-family: '阿里妈妈东方大楷 Regular';
+        color: #b5b5b5;
+        font-family: sans-serif;
+        font-weight: 550;
       }
       .today {
-        font-size: 68rpx;
+        font-size: 50rpx;
         font-family: '阿里妈妈东方大楷 Regular';
       }
     }

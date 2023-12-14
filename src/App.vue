@@ -13,11 +13,7 @@ onHide(() => {
 </script>
 
 <style lang="scss">
-// 字体图标
-@import '@/styles/fonts.scss';
-
 view,
-navigator,
 input,
 scroll-view {
   box-sizing: border-box;

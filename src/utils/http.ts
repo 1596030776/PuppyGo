@@ -9,12 +9,15 @@ const baseURL = 'http://8.140.57.220:8889/puppygo'
 const httpInterceptor = {
   // 拦截前触发
   invoke(options: UniApp.RequestOptions) {
-    // 1. 非 http 开头需拼接地址
+    // . 请求超时
+    options.timeout = 3000
+    if (options.url.startsWith('/conversation/fragment/advice/')) {
+      options.timeout = 60000
+    }
     if (!options.url.startsWith('http')) {
+      // 2. 非 http 开头需拼接地址
       options.url = baseURL + options.url
     }
-    // 2. 请求超时
-    options.timeout = 3000
     // 3. 添加小程序端请求头标识
     options.header = {
       'source-client': 'miniapp',

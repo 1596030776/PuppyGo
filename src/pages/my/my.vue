@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { useMemberStore } from '@/stores'
+import { usePetStore } from '@/stores/modules/pet'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const memberStore = useMemberStore()
+const petStore = usePetStore()
 </script>
 
 <template>
   <scroll-view class="viewport" scroll-y enable-back-to-top>
     <!-- 个人资料 -->
     <view class="profile" :style="{ paddingTop: safeAreaInsets!.top + 'px' }">
+      <view class="top-bar">个人资料</view>
       <!-- 情况1：已登录 -->
       <view class="overview" v-if="memberStore.profile">
         <navigator url="/pagesMember/profile/profile" hover-class="none">
@@ -17,10 +20,29 @@ const memberStore = useMemberStore()
         </navigator>
         <view class="meta">
           <view class="nickname">{{
-            memberStore.profile.nickname || memberStore.profile.account
+            memberStore.profile!.nickname || memberStore.profile.nikename
           }}</view>
-          <navigator class="extra" url="/pagesMember/profile/profile" hover-class="none">
-            <text class="update">更新头像昵称</text>
+        </view>
+        <navigator class="extra" url="/pagesMember/profile/profile" hover-class="none">
+          <text class="update">更新用户资料</text>
+          <image class="bianji" src="../../static/images/编辑-线.png" mode="scaleToFill" />
+        </navigator>
+        <view class="button-bar">
+          <view class="button-item">
+            <image class="fake-button" src="../../static/images/pin-线.png" mode="scaleToFill" />
+            管理
+          </view>
+          <a class="roll">|</a>
+          <view class="button-item">
+            <image class="fake-button" src="../../static/images/分享-线.png" mode="scaleToFill" />
+            分享
+          </view>
+          <a class="roll">|</a>
+          <navigator class="settings" url="/pagesMember/settings/settings" hover-class="none">
+            <view class="button-item">
+              <image class="fake-button" src="../../static/images/设置-线.png" mode="scaleToFill" />
+              设置
+            </view>
           </navigator>
         </view>
       </view>
@@ -42,98 +64,105 @@ const memberStore = useMemberStore()
           </view>
         </view>
       </view>
-      <navigator class="settings" url="/pagesMember/settings/settings" hover-class="none">
-        设置
-      </navigator>
     </view>
     <!-- 宠物列表 -->
-
-    <view class="pets">
-      <navigator url="/pagesMember/logpet/logpet" hover-class="none"> 登记宠物 </navigator></view
+    <view class="btn-grad">
+      <navigator url="/pagesMember/logpet/logpet" hover-class="none"
+        ><image class="add-logo" src="../../static/images/添加-线.png" mode="scaleToFill" />
+        登记宠物
+      </navigator></view
     >
+    <view class="data-title">数据</view>
+    <view class="sum-info">
+      <view class="data-item">
+        <image class="data-image" src="../../static/images/pet.png"> </image>
+        <view class="data-data">{{ petStore.petsInfo?.length }}</view>
+        <view class="data-danwei">只</view>
+      </view>
+      <view class="data-item">
+        <image class="data-image" src="../../static/images/通知.png"> </image>
+        <view class="data-data">23</view>
+        <view class="data-danwei">次</view> </view
+      ><view class="data-item">
+        <image class="data-image" src="../../static/images/eye.png"> </image>
+        <view class="data-data">26</view>
+        <view class="data-danwei">天</view>
+      </view>
+    </view>
   </scroll-view>
 </template>
 
 <style lang="scss">
-page {
-  height: 100%;
-  overflow: hidden;
-  background-color: #f7f7f8;
-}
-
 .viewport {
   height: 100%;
   background-repeat: no-repeat;
-  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
   background-size: auto;
+  display: flex;
+}
+
+.top-bar {
+  font-family: sans-serif;
+  font-weight: bold;
+  padding-top: 20rpx;
+  padding-left: 50rpx;
 }
 
 /* 用户信息 */
 .profile {
-  margin-top: 20rpx;
-  position: relative;
-
-  .overview {
+  .extra {
+    margin-top: 20rpx;
+    width: 40%;
     display: flex;
-    height: 120rpx;
-    padding: 0 36rpx;
-    color: #fff;
+    padding: 18rpx;
+    border-radius: 70rpx;
+    color: white;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+    .update {
+      display: flex;
+      align-items: center;
+      letter-spacing: normal;
+    }
+    .bianji {
+      width: 42rpx;
+      height: 42rpx;
+    }
   }
-
-  .avatar {
-    width: 120rpx;
-    height: 120rpx;
-    border-radius: 50%;
-    background-color: #eee;
+  .fake-button {
+    width: 62rpx;
+    height: 62rpx;
   }
-
-  .gray {
-    filter: grayscale(100%);
-  }
-
-  .meta {
+  .button-item {
+    padding: 42rpx;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    line-height: 30rpx;
-    padding: 16rpx 0;
-    margin-left: 20rpx;
   }
-
-  .nickname {
-    max-width: 350rpx;
-    margin-bottom: 16rpx;
-    font-size: 30rpx;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  .button-item:first-child:before {
+    display: none;
   }
-
-  .extra {
+  .button-bar {
+    margin-top: 30rpx;
+    font-family: sans-serif;
+    font-weight: bold;
     display: flex;
-    font-size: 20rpx;
+    align-items: center;
   }
-
-  .tips {
-    font-size: 22rpx;
+  .roll {
+    color: rgba(196, 196, 194, 0.874);
+    font-size: 52rpx;
   }
-
-  .update {
-    padding: 3rpx 10rpx 1rpx;
-    color: rgba(255, 255, 255, 0.8);
-    border: 1rpx solid rgba(255, 255, 255, 0.8);
-    margin-right: 10rpx;
-    border-radius: 30rpx;
+  .avatar {
+    width: 180rpx;
+    height: 180rpx;
+    margin-bottom: 20rpx;
+    border-radius: 50%;
   }
-
-  .settings {
-    position: absolute;
-    bottom: 0;
-    right: 40rpx;
-    font-size: 30rpx;
-    color: #fff;
+  .overview {
+    margin-top: 120rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -148,9 +177,64 @@ page {
   box-shadow: 0 4rpx 6rpx rgba(240, 240, 240, 0.6);
 }
 
-/* 猜你喜欢 */
-.guess {
-  background-color: #f7f7f8;
-  margin-top: 20rpx;
+.btn-grad {
+  background-image: linear-gradient(to right, #77a1d3 0%, #79cbca 51%, #77a1d3 100%);
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 7px;
+  display: block;
+}
+
+.btn-grad-hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+.add-logo {
+  height: 40rpx;
+  width: 40rpx;
+}
+.data-title {
+  margin-left: 50rpx;
+  margin-bottom: 50rpx;
+  margin-top: 40rpx;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.nickname {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+.sum-info {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10rpx;
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
+  border-radius: 8rpx;
+  padding: 24rpx;
+  box-shadow: rgba(237, 239, 243, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+.data-image {
+  height: 66rpx;
+  width: 66rpx;
+}
+.data-item {
+  font-family: sans-serif;
+  font-weight: bold;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
 }
 </style>
