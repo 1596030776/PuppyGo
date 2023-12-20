@@ -1,2 +1,3 @@
-# PetCarePro
-A pet care weixin app based on uniapp.
+# PuppyGo
+一款基于大模型的智能宠物医疗护理应用，可以进行智能问答和宠物事项管理。
+本仓库包含了所有的前端代码
