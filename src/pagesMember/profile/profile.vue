@@ -22,19 +22,21 @@ onLoad(() => {
 
 const onAvatarChange = () => {
   // 调用拍照/选择图片
-  uni.chooseMedia({
+  uni.chooseImage({
     // 文件个数
     count: 1,
-    // 文件类型
-    mediaType: ['image'],
+    // 压缩类型
+    sizeType: ['original', 'compressed'],
+    // 图片源 相册
+    sourceType: ['album', 'camera'],
     success: (res) => {
       // 本地路径
-      const { tempFilePath } = res.tempFiles[0]
+      const tempFilePath = res.tempFiles[0]
       // 文件上传
       uni.uploadFile({
         url: '/user/profile/avatar',
         name: 'file', // 后端数据字段名
-        filePath: tempFilePath, // 新头像
+        filePath: tempFilePath.path, // 新头像
         success: (res) => {
           // 判断状态码是否上传成功
           if (res.statusCode === 200) {

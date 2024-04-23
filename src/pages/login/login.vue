@@ -25,7 +25,8 @@ const onGetphonenumber: UniHelper.ButtonOnGetphonenumber = async (ev) => {
 }
 
 const onGetphonenumberSimple = async () => {
-  const result = await postLoginWxMinSimpleAPI('13961302120')
+
+  const result = await postLoginWxMinSimpleAPI('ru')
   uni.showToast({ icon: 'none', title: '登录成功' })
   const memberStore = useMemberStore()
   memberStore.setProfile(result.result)

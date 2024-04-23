@@ -160,15 +160,17 @@ const goBack = () => {
 }
 const onChoosePhone = () => {
   // 调用拍照/选择图片
-  uni.chooseMedia({
+  uni.chooseImage({
     // 文件个数
     count: 1,
-    // 文件类型
-    mediaType: ['image'],
+    // 压缩类型
+    sizeType: ['original', 'compressed'],
+    // 图片源 相册
+    sourceType: ['album', 'camera'],
     success: (res) => {
       // 本地路径
-      const { tempFilePath } = res.tempFiles[0]
-      filePath.value = tempFilePath
+      const tempFilePath = res.tempFiles[0]
+      filePath.value = tempFilePath.path
     },
   })
 }
@@ -197,7 +199,7 @@ const onInoculationChange: UniHelper.RadioGroupOnChange = (ev) => {
 const onSubmit = () => {
   // 创建宠物
   uni.uploadFile({
-    url: 'http://8.140.57.220:8889/puppygo/pet',
+    url: 'http://39.105.177.99:28081/puppygo/pet',
     name: 'file', // 后端数据字段名
     filePath: filePath.value, // 宠物图片
     formData: {

@@ -98,6 +98,7 @@ const petStore = usePetStore()
   background-repeat: no-repeat;
   background-size: auto;
   display: flex;
+  justify-content: center;
 }
 
 .top-bar {
@@ -111,12 +112,12 @@ const petStore = usePetStore()
 .profile {
   .extra {
     margin-top: 20rpx;
-    width: 40%;
+    width: 100%;
     display: flex;
     padding: 18rpx;
-    border-radius: 70rpx;
+    border-radius: 70px;
     color: white;
-    background-color: black;
+    background-color: #518dfd;
     align-items: center;
     justify-content: center;
     .update {

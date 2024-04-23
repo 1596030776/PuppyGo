@@ -48,7 +48,7 @@ const weekInfo = ['星期一', '星期二', '星期三', '星期四', '星期五
     .top-date {
       margin-left: 40rpx;
       .date {
-        color: #b5b5b5;
+        color: black;
         font-family: sans-serif;
         font-weight: 550;
       }

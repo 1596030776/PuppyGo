@@ -3,8 +3,8 @@ import { useMemberStore } from '@/stores'
 
 // 请求基地址
 // const baseURL = 'https://pcapi-xiaotuxian-front-devtest.itheima.net'
-const baseURL = 'http://8.140.57.220:8889/puppygo'
-// const baseURL = 'http://localhost:8889/puppygo'
+const baseURL = 'http://39.105.177.99:28081/puppygo'
+//const baseURL = 'http://localhost:8889/puppygo'
 // 拦截器配置
 const httpInterceptor = {
   // 拦截前触发

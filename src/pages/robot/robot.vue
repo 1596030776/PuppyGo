@@ -152,15 +152,17 @@ const pictureSelected = ref(false)
 
 const onChoosePhone = () => {
   // 调用拍照/选择图片
-  uni.chooseMedia({
+  uni.chooseImage({
     // 文件个数
     count: 1,
-    // 文件类型
-    mediaType: ['image'],
+    // 压缩类型
+    sizeType: ['original', 'compressed'],
+    // 图片源 相册
+    sourceType: ['album', 'camera'],
     success: (res) => {
       // 本地路径
-      const { tempFilePath } = res.tempFiles[0]
-      filePath.value = tempFilePath
+      const tempFilePath = res.tempFiles[0]
+      filePath.value = tempFilePath.path
       pictureSelected.value = true
     },
   })
