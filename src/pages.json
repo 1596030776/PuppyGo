@@ -51,13 +51,13 @@
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "white",
     "backgroundColor": "#F8F8F8"
   },
   // 设置 TabBar
   "tabBar": {
     "color": "#333",
-    "backgroundColor": "#F8F8F8",
+    "backgroundColor": "white",
     "borderStyle": "white",
     "list": [
       {

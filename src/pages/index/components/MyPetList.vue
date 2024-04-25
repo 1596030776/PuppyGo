@@ -114,7 +114,7 @@ function imgError(item) {
 
 <style lang="scss" scoped>
 .container {
-  background-color: white;
+  background-color: rgb(248, 248, 248);
   padding: 20rpx;
   border-radius: 10rpx;
 

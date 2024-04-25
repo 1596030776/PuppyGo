@@ -40,10 +40,10 @@ export const getStatue = (fragmentId: number) => {
 // "question": "string",
 // "statue": "DB_INSERT_FAILED"
 
-/**获取状态 */
+/**获取结果 */
 export const getAnswer = (fragmentId: number) => {
   return http<Answer>({
     method: 'GET',
-    url: `/conversation/fragment/${fragmentId}`,
+    url: `/conversation/fragment/${fragmentId}/answer`,
   })
 }
