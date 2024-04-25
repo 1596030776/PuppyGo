@@ -1,0 +1,17 @@
+{
+    "id": "comment-list",
+    "name": "评论列表简约、回复",
+    "displayName": "评论列表简约、回复",
+    "version": "1.0.2",
+    "description": "评论列表适配",
+    "keywords": [
+        "评论",
+        "简约"
+    ],
+    "dcloudext": {
+        "category": [
+            "前端组件",
+            "通用组件"
+        ]
+    }
+}
