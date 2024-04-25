@@ -44,6 +44,6 @@ export const getStatue = (fragmentId: number) => {
 export const getAnswer = (fragmentId: number) => {
   return http<Answer>({
     method: 'GET',
-    url: `/conversation/fragment/${fragmentId}`,
+    url: `/conversation/fragment/${fragmentId}/answer`,
   })
 }

@@ -8,7 +8,12 @@
       :scroll-with-animation="true"
       class="scroll-view"
     >
-      <view class="top-bar"> PetCareRobot </view>
+      <!-- <view class="top-bar"> PetCareRobot </view> -->
+      <u-navbar
+        title="PetCareRobot"
+        :autoBack="false"
+      >
+      </u-navbar>
       <!-- 聊天主体 -->
       <view class="chat-body msglistview">
         <!-- 聊天记录 -->
@@ -17,18 +22,18 @@
           <view class="item self" v-if="item.userContent != ''">
             <view class="content right">
               <view class="user-content">
-                <cover-image v-if="item.imageUrl !== ''" :src="item.imageUrl"> </cover-image
+                <image v-if="item.imageUrl !== ''" :src="item.imageUrl" mode="aspectFill"> </image
                 >{{ item.userContent }}</view
               >
             </view>
             <view class="avatar">
-              <image :src="memberStore.profile.avatar" mode="scaleToFill"
+              <image :src="memberStore.profile.avatar" mode="aspectFit"
             /></view>
           </view>
           <!-- 机器人对话框 -->
           <view class="item Ai">
             <view class="avatar">
-              <image src="../../static/images/robot.png" mode="scaleToFill" />
+              <image src="../../static/images/robot.png" mode="aspectFit" />
             </view>
             <view class="content left">
               <view class="load-6" v-if="item.botContent === ''">
@@ -80,17 +85,23 @@
     <view class="chat-bottom">
       <view class="send-msg">
         <view class="uni-textarea">
-          <textarea
+          <input
             v-model="chatMsg"
             maxlength="300"
             :show-confirm-bar="false"
             auto-height
-          ></textarea>
+          />
         </view>
-        <button @click="handleSend" class="send-btn">发送</button>
+        <button @click="handleSend" class="send-btn">
+          <image
+            class="send-button-pic"
+            mode="aspectFill"
+            src="../../static/images/send.png"
+          ></image>
+        </button>
         <image
           @tap="onChoosePhone"
-          class="add-picture"
+          class="send-picture"
           mode="aspectFill"
           :src="
             !pictureSelected
@@ -200,7 +211,7 @@ const handleSend = async () => {
     if (filePath.value !== '') {
       uni.uploadFile({
         //conversationId=${chatStore.conservation.id}&question=${chatMsg.value}
-        url: `http://8.140.57.220:8889/puppygo/conversation/fragment`,
+        url: `http://39.105.177.99:28081/puppygo/conversation/fragment`,
         name: 'file', // 后端数据字段名
         filePath: filePath.value, // 宠物图片
         formData: {
@@ -306,8 +317,7 @@ $sendBtnbgc: #4f7df5;
 view,
 button,
 text,
-input,
-textarea {
+input {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -316,7 +326,7 @@ textarea {
 /* 聊天消息 */
 .chat {
   padding-bottom: 30rpx;
-  background-color: #f6f6f6;
+  background-color: white;
   margin-bottom: 50rpx;
   .scroll-view {
     margin-bottom: 40rpx;
@@ -334,11 +344,11 @@ textarea {
         // background-color: greenyellow;
 
         .right {
-          background-color: $chatContentbgc;
+          background-color: #eef4ff;
           padding: 12rpx;
         }
         .left {
-          background-color: #ffffff;
+          background-color: #f1f1f1;
         }
         // 聊天消息的三角形
         .right::after {
@@ -350,7 +360,7 @@ textarea {
           left: 100%;
           top: 10px;
           border: 12rpx solid transparent;
-          border-left: 12rpx solid $chatContentbgc;
+          border-left: 12rpx solid #eef4ff;
         }
 
         .left::after {
@@ -362,7 +372,7 @@ textarea {
           top: 10px;
           right: 100%;
           border: 12rpx solid transparent;
-          border-right: 12rpx solid #ffffff;
+          border-right: 12rpx solid #f1f1f1;
         }
 
         .content {
@@ -384,11 +394,10 @@ textarea {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 78rpx;
-          height: 78rpx;
+          width: 82rpx;
+          height: 82rpx;
           border-radius: 50%;
           overflow: hidden;
-          box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
 
           image {
             align-self: center;
@@ -402,7 +411,7 @@ textarea {
   .chat-bottom {
     width: 100%;
     height: 100%;
-    background: #f4f5f7;
+    background-color: white;
 
     .send-msg {
       display: flex;
@@ -412,21 +421,26 @@ textarea {
       min-height: 120rpx;
       position: fixed;
       bottom: 0;
-      background: #ededed;
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
     }
 
     .uni-textarea {
-      textarea {
+      display: flex;
+      align-items: center;
+      input {
         width: 500rpx;
-        min-height: 75rpx;
+        min-height: 68rpx;
         max-height: 500rpx;
-        background: #ffffff;
-        border-radius: 8rpx;
+        background: rgb(241, 241, 241);
+        border-radius: 26rpx;
         font-size: 32rpx;
         font-family: PingFang SC;
         color: #333333;
         line-height: 43rpx;
         padding: 5rpx 8rpx;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+        display: flex;
+        align-items: center;
       }
     }
 
@@ -435,15 +449,26 @@ textarea {
       align-items: center;
       justify-content: center;
       margin-left: 25rpx;
-      width: 100rpx;
-      height: 70rpx;
+      width: 62rpx;
+      height: 62rpx;
       background: $sendBtnbgc;
-      border-radius: 8rpx;
+      border-radius: 50%;
       font-size: 24rpx;
       font-family: PingFang SC;
       font-weight: 500;
       color: #ffffff;
       line-height: 28rpx;
+      padding: 10rpx;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    }
+    .send-button-pic{
+      padding: 5rpx;
+    }
+    .send-picture{
+      width: 44rpx;
+      height: 44rpx;
+      margin-left: auto;
+      margin-right: 28rpx;
     }
 
     .add-picture {
