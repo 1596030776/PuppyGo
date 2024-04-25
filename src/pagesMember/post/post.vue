@@ -6,9 +6,6 @@
   const { safeAreaInsets } = uni.getSystemInfoSync()
   const postStore = usePostStore()
   const postInfo = postStore.postInfo
-  onMounted(() => {
-    console.log(postInfo)
-  })
 
   const detail = reactive({
     commentList: [{
@@ -131,7 +128,6 @@
     margin-left: 10upx;
     margin-right: 10upx;
     margin-top: 10upx;
-    height: 250upx;
   }
 
   .fixed-input {

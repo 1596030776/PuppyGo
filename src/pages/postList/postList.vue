@@ -3,7 +3,7 @@
     <view>
       帖子列表
     </view>
-    <image src="../../static/tabs/newPost.png" style="width: 25px; height: 25px; margin-top: 10px;"></image>
+    <image src="../../static/tabs/newPost.png" style="width: 25px; height: 25px; margin-top: 10px;" @click="newPost"></image>
   </view>
   <view class="post-list-container">
     <div class="test-component">
@@ -53,6 +53,14 @@
       likeNum: "200",
     },
   ])
+
+  const newPost = () => {
+    uni.navigateTo({
+      url: "/pagesMember/newPost/newPost",
+      animationType: 'pop-in',
+      animationDuration: 300
+    })
+  }
 </script>
 
 <style>

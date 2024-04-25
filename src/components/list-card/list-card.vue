@@ -43,11 +43,6 @@
     console.log(props.postInfo)
     if(props.postInfo != undefined) {
       postStore.setPostInfo(props.postInfo)
-      uni.navigateTo({
-        url: "/pagesMenber/post/post",
-        animationType: 'pop-in',
-        animationDuration: 300
-      })
     }
   }
 </script>

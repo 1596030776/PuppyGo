@@ -37,6 +37,7 @@
       "path": "pages/my/my",
       "style": {
         "navigationBarTitleText": "我的",
+        "navigationBarTextStyle": "black",
         "navigationStyle": "custom"
       }
     },
@@ -110,7 +111,14 @@
           "path": "post/post",
           "style": {
             "navigationStyle": "custom",
-            "navigationBarTextStyle": "white"
+            "navigationBarTextStyle": "black"
+          }
+        },
+        {
+          "path": "newPost/newPost",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTextStyle": "black"
           }
         },
         {

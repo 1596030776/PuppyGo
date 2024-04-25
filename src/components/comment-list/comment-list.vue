@@ -1,6 +1,6 @@
 <template>
 	<view class="commnent-content">
-		<view class="comment-item">
+<!-- 		<view class="comment-item">
 			<view class="user-info">
 				<view class="portrait">
 					<image :src="detail.portrait" mode="aspectFill" />
@@ -33,7 +33,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="comment-list">
 			<view class="comment-item" v-for="item in detail.commentList" :key="item.id" @click="reply(item)">
 				<view class="user-info">
