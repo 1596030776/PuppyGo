@@ -13,7 +13,7 @@
 			</view> -->
       <!-- <img :src="postInfo.image" alt="" /> -->
       <navigator url="/pagesMember/post/post" hover-class="none">
-        <image :src="postInfo.image" style="width: 100%; height: 360upx; margin-top: 8px;" mode="aspectFill" @click="openPost"/>
+        <image :src="postInfo.image" style="width: 100%; height: 360upx;" mode="aspectFill" @click="openPost"/>
       </navigator>
 
 
@@ -48,6 +48,11 @@
 </script>
 
 <style>
+  .header {
+    background-color: #2ea5ff;
+    border-radius: 19px 19px 0 0;
+    padding-bottom: 8px;
+  }
 
 	.low{
 		margin-left: 5px;
@@ -60,7 +65,7 @@
 		width: 93%;
 		margin: 20rpx auto;
 		border: 1px solid #999999;
-		border-radius: 20upx;
+		border-radius: 20px;
 	}
 
 	.img {
@@ -78,6 +83,7 @@
 		font-size: 15px;
 		margin-top: -100upx;
 		margin-left: 170upx;
+    color: white;
 	}
 
 
@@ -100,7 +106,7 @@
 		display: inline-flex;
 		margin-left: 170upx;
 		margin-top: -20upx;
-		color: #808080;
+		color: white;
 	}
 
 	.leave {

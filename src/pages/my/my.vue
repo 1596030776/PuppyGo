@@ -179,7 +179,8 @@ const petStore = usePetStore()
 }
 
 .btn-grad {
-  background-image: linear-gradient(to right, #77a1d3 0%, #79cbca 51%, #77a1d3 100%);
+  //background-image: linear-gradient(to right, #77a1d3 0%, #79cbca 51%, #77a1d3 100%);
+  background-color: #518dfd;
   margin: 10px;
   padding: 15px 45px;
   text-align: center;
