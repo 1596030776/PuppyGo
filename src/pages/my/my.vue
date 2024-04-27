@@ -6,6 +6,7 @@ import { usePetStore } from '@/stores/modules/pet'
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const memberStore = useMemberStore()
 const petStore = usePetStore()
+
 </script>
 
 <template>
@@ -28,10 +29,10 @@ const petStore = usePetStore()
           <image class="bianji" src="../../static/images/编辑-线.png" mode="scaleToFill" />
         </navigator>
         <view class="button-bar">
-          <view class="button-item">
+          <navigator class="button-item" url="/pagesMember/managePost/managePost">
             <image class="fake-button" src="../../static/images/pin-线.png" mode="scaleToFill" />
             管理
-          </view>
+          </navigator>
           <a class="roll">|</a>
           <view class="button-item">
             <image class="fake-button" src="../../static/images/分享-线.png" mode="scaleToFill" />

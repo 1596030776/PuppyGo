@@ -128,6 +128,13 @@
           }
         },
         {
+          "path": "managePost/managePost",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTextStyle": "black"
+          }
+        },
+        {
           "path": "logpet/logpet",
           "style": {
             "navigationBarTitleText": "登记宠物"

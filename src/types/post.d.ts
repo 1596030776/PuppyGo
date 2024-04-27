@@ -22,3 +22,5 @@ export type CreatePostInfo = {
 
 /**帖子列表 */
 export type PostList = Array<Post>
+
+
