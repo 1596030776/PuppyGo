@@ -4,11 +4,9 @@
       :style="{ paddingTop: safeAreaInsets?.top + 'px', height: screenHeight + 'px' }"
       id="scrollview"
       scroll-y="true"
-      :scroll-top="scrollTop"
       :scroll-with-animation="true"
       class="scroll-view"
     >
-      <!-- <view class="top-bar"> PetCareRobot </view> -->
       <u-navbar
         title="PetCareRobot"
         :autoBack="false"
@@ -22,12 +20,13 @@
           <view class="item self" v-if="item.userContent != ''">
             <view class="content right">
               <view class="user-content">
-                <image v-if="item.imageUrl !== ''" :src="item.imageUrl" mode="aspectFill"> </image
-                >{{ item.userContent }}</view
-              >
+                <image v-if="item.imageUrl!==''" class="catalog-img" :src="item.imageUrl" mode="aspectFill" />
+                <!-- <image :src="item.imageUrl" mode="aspectFill" /> -->
+                {{ item.userContent }}
+              </view>
             </view>
             <view class="avatar">
-              <image :src="memberStore.profile.avatar" mode="aspectFit"
+              <image :src="memberStore.profile.avatar" mode="aspectFill"
             /></view>
           </view>
           <!-- 机器人对话框 -->
@@ -209,6 +208,7 @@ const handleSend = async () => {
       isAnswer: true,
     })
     if (filePath.value !== '') {
+      console.log('发送图片',filePath.value)
       uni.uploadFile({
         //conversationId=${chatStore.conservation.id}&question=${chatMsg.value}
         url: `http://39.105.177.99:28081/puppygo/conversation/fragment`,
@@ -231,13 +231,22 @@ const handleSend = async () => {
               if (statueResult.result === 'GPT_FINISHED') {
                 const answerResult = await getAnswer(obj.value.fragmentId)
                 clearInterval(intervalId)
-                obj.value.botContent = answerResult.result.answer
+                // obj.value.botContent = answerResult.result.answer
                 setTimeout(() => {
                   uni.pageScrollTo({
                     scrollTop: 9999, //滚动到页面的目标位置（单位px）
                     duration: 0, //滚动动画的时长，默认300ms，单位 ms
                   })
                 }, 100)
+                let i=0;
+                const charInterval=setInterval(async ()=>{
+                  if(i===answerResult.result.answer.length-1){
+                    clearInterval(charInterval)
+                  }
+                  obj.value.botContent+=answerResult.result.answer[i];
+                  i+=1
+                }, 100)
+
               } else if (statueResult.result === 'GPT_TIMEOUT') {
                 clearInterval(intervalId)
                 obj.value.botContent = '搜索专业知识超时'
@@ -265,7 +274,17 @@ const handleSend = async () => {
         if (statueResult.result === 'GPT_FINISHED') {
           const answerResult = await getAnswer(obj.value.fragmentId)
           clearInterval(intervalId)
-          obj.value.botContent = answerResult.result.answer
+          // obj.value.botContent = answerResult.result.answer
+          obj.value.botContent=''
+          let i=0;
+          console.log(answerResult.result.answer)
+          const charInterval=setInterval(async ()=>{
+            if(i===answerResult.result.answer.length-1){
+              clearInterval(charInterval)
+            }
+            obj.value.botContent+=answerResult.result.answer[i];
+            i+=1
+          },100)
         }
       }, 2000)
       chatMsg.value = ''
@@ -330,6 +349,13 @@ input {
   margin-bottom: 50rpx;
   .scroll-view {
     margin-bottom: 40rpx;
+
+    .catalog-img{
+      width: 444rpx;
+      height:470rpx;
+      border-radius: 8rpx;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    }
 
     .chat-body {
       display: flex;
@@ -411,7 +437,6 @@ input {
   .chat-bottom {
     width: 100%;
     height: 100%;
-    background-color: white;
 
     .send-msg {
       display: flex;
@@ -422,6 +447,7 @@ input {
       position: fixed;
       bottom: 0;
       box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+      background-color: white;
     }
 
     .uni-textarea {

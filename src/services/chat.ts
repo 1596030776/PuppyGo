@@ -42,8 +42,9 @@ export const getStatue = (fragmentId: number) => {
 
 /**获取结果 */
 export const getAnswer = (fragmentId: number) => {
+  console.log("发送fragmentid", fragmentId)
   return http<Answer>({
     method: 'GET',
-    url: `/conversation/fragment/${fragmentId}/answer`,
+    url: `/conversation/fragment/${fragmentId}`,
   })
 }

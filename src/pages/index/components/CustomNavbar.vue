@@ -5,6 +5,11 @@ const petStore = usePetStore()
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const now = new Date()
 const weekInfo = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+
+const showNews=function(e:Number){
+  plus.runtime.openURL(petStore.newsList![e].newsUrl)
+  window.open(petStore.newsList![e].newsUrl)
+}
 </script>
 
 <template>
@@ -29,6 +34,7 @@ const weekInfo = ['星期一', '星期二', '星期三', '星期四', '星期五
           border-radius="22"
           :effect3d="true"
           bgColor="none"
+          @click="showNews($event)"
         ></u-swiper>
       </view>
     </view>
@@ -39,22 +45,6 @@ const weekInfo = ['星期一', '星期二', '星期三', '星期四', '星期五
 /* 自定义导航条 */
 .container {
   height: 65vh;
-  .indicator{
-    top: 200rpx !important;
-    margin-top: 200rpx;
-    &__dot {
-			height: 6px;
-			width: 6px;
-			border-radius: 100px;
-			background-color: rgba(255, 255, 255, 0.35);
-			margin: 0 5px;
-			transition: background-color 0.3s;
-      margin-top: 200rpx !important;
-			&--active {
-				background-color: #ffffff;
-			}
-		}
-  }
   .top-section{
     background-color: #7DE2FC;
     height: 40vh;

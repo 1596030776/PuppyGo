@@ -67,6 +67,7 @@
     "dayjs": "^1.11.10",
     "pinia": "2.0.27",
     "pinia-plugin-persistedstate": "^3.2.0",
+    "plus-websocket": "^1.0.7",
     "superagent": "^8.1.2",
     "uview-plus": "^3.1.41",
     "uview-ui": "^2.0.36",
