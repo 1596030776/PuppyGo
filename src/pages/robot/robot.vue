@@ -374,7 +374,8 @@ input {
           padding: 12rpx;
         }
         .left {
-          background-color: #f1f1f1;
+          background-color: #518dfd;
+          color: white;
         }
         // 聊天消息的三角形
         .right::after {
@@ -412,7 +413,6 @@ input {
           font-size: 32rpx;
           font-family: PingFang SC;
           font-weight: 500;
-          color: #333333;
           line-height: 42rpx;
         }
 

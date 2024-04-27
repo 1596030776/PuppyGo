@@ -46,7 +46,7 @@ const showNews=function(e:Number){
 .container {
   height: 65vh;
   .top-section{
-    background-color: #7DE2FC;
+    background-color: #518dfd;
     height: 40vh;
     border-radius: 0 0 60px 60px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
@@ -66,14 +66,14 @@ const showNews=function(e:Number){
       margin-bottom: 60rpx;
       font-weight: 600;
       .date {
-        color: rgba(0, 0, 0, 0.47);
+        color: rgb(255, 255, 255);
       }
       .today {
         font-size: 50rpx;
         font-family: Monospace;
         font-weight: 510;
         letter-spacing: 5rpx;
-        color: rgb(32, 32, 32);
+        color: rgb(255, 255, 255);
       }
       .news-icon{
         margin-right: 42rpx;

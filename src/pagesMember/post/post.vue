@@ -1,14 +1,10 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue'
-  import { onMounted } from 'vue'
   import { usePostStore } from '@/stores/modules/post'
   // 获取屏幕边界到安全区域距离
   const { safeAreaInsets } = uni.getSystemInfoSync()
   const postStore = usePostStore()
   const postInfo = postStore.postInfo
-  onMounted(() => {
-    console.log(postInfo)
-  })
 
   const detail = reactive({
     commentList: [{
@@ -63,12 +59,12 @@
 <template>
   <view :style="{ paddingTop: safeAreaInsets!.top + 'px' }"></view>
   <view class="header">
-    <image class="img" :src="postInfo.publisher_avatar"></image>
-    <view class="auth">{{postInfo.publisher_name}}</view>
+    <image class="img" :src="postInfo.avatar"></image>
+    <view class="auth">{{postInfo.nickname}}</view>
     <view class="time">{{postInfo.createTime}}</view>
   </view>
   <view class="image">
-    <image :src="postInfo.image" style="width: 100%; height: 450upx; margin-top: 8px;" mode="aspectFill" />
+    <image :src="postInfo.imageUrl" style="width: 100%; height: 450upx; margin-top: 8px;" mode="aspectFill" />
   </view>
   <view style="padding: 0 12px; margin-top: 8px;">
     <view class="title">
@@ -131,7 +127,6 @@
     margin-left: 10upx;
     margin-right: 10upx;
     margin-top: 10upx;
-    height: 250upx;
   }
 
   .fixed-input {
