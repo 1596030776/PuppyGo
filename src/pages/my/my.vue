@@ -26,22 +26,22 @@ const petStore = usePetStore()
         </view>
         <navigator class="extra" url="/pagesMember/profile/profile" hover-class="none">
           <text class="update">更新用户资料</text>
-          <image class="bianji" src="../../static/images/编辑-线.png" mode="scaleToFill" />
+          <image class="bianji" src="../../static/images/bianji.png" mode="scaleToFill" />
         </navigator>
         <view class="button-bar">
           <navigator class="button-item" url="/pagesMember/managePost/managePost">
-            <image class="fake-button" src="../../static/images/pin-线.png" mode="scaleToFill" />
+            <image class="fake-button" src="../../static/images/pin.png" mode="scaleToFill" />
             管理
           </navigator>
           <a class="roll">|</a>
           <view class="button-item">
-            <image class="fake-button" src="../../static/images/分享-线.png" mode="scaleToFill" />
+            <image class="fake-button" src="../../static/images/fenxiang.png" mode="scaleToFill" />
             分享
           </view>
           <a class="roll">|</a>
           <navigator class="settings" url="/pagesMember/settings/settings" hover-class="none">
             <view class="button-item">
-              <image class="fake-button" src="../../static/images/设置-线.png" mode="scaleToFill" />
+              <image class="fake-button" src="../../static/images/shezhi.png" mode="scaleToFill" />
               设置
             </view>
           </navigator>
@@ -50,11 +50,7 @@ const petStore = usePetStore()
       <!-- 情况2：未登录 -->
       <view class="overview" v-else>
         <navigator url="/pages/login/login" hover-class="none">
-          <image
-            class="avatar gray"
-            mode="aspectFill"
-            src="http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png"
-          ></image>
+
         </navigator>
         <view class="meta">
           <navigator url="/pages/login/login" hover-class="none" class="nickname">
@@ -81,7 +77,7 @@ const petStore = usePetStore()
         <view class="data-danwei">只</view>
       </view>
       <view class="data-item">
-        <image class="data-image" src="../../static/images/通知.png"> </image>
+        <image class="data-image" src="../../static/images/tongzhi.png"> </image>
         <view class="data-data">23</view>
         <view class="data-danwei">次</view> </view
       ><view class="data-item">

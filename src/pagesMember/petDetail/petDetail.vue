@@ -17,7 +17,7 @@
         <view class="pet-card">
           <view class="top-bar">
             <image
-              :src="petStore.curPet!.kind==='猫'?'../../static/images/猫.png':'../../static/images/dog.png'"
+              :src="petStore.curPet!.kind==='猫'?'../../static/images/mao.png':'../../static/images/dog.png'"
               mode="scaleToFill"
               class="avator"
             />
@@ -26,7 +26,7 @@
                 <view class="name">{{ petStore.curPet!.name }}</view>
                 <image
                   class="gender"
-                  :src="petStore.curPet!.sex==='男'?'../../static/images/男.png':'../../static/images/女.png'"
+                  :src="petStore.curPet!.sex==='男'?'../../static/images/nan.png':'../../static/images/nv.png'"
                   mode="scaleToFill"
                 />
               </view>
