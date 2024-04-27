@@ -2,18 +2,18 @@
 	<view class="box">
 		<view class="father-box">
 			<view class="header">
-				<image class="img" :src="postInfo.publisher_avatar"></image>
-				<view class="auth">{{postInfo.publisher_name}}</view>
+				<image class="img" :src="postInfo.avatar"></image>
+				<view class="auth">{{postInfo.nickname}}</view>
 <!-- 				<view class="leave">LV{{postInfo.leave}}</view>
 				<view class="tag">{{postInfo.tag}}</view> -->
-				<view class="time">{{postInfo.createTime}}</view>
+				<view class="time">{{createTime}}</view>
 			</view>
 
 			<!-- <view class="content">{{postInfo.content}}....<view class="show">点击阅读详细</view>
 			</view> -->
       <!-- <img :src="postInfo.image" alt="" /> -->
       <navigator url="/pagesMember/post/post" hover-class="none">
-        <image :src="postInfo.image" style="width: 100%; height: 360upx;" mode="aspectFill" @click="openPost"/>
+        <image :src="postInfo.imageUrl" style="width: 100%; height: 360upx;" mode="aspectFill" @click="openPost"/>
       </navigator>
 
 
@@ -23,7 +23,7 @@
         </view>
 				<view class="good">
 					<image class="icon-like" src="../../static/tabs/love.png"></image>
-					<view style="font-size: 12px;">{{postInfo.likeNum}}</view>
+					<view style="font-size: 12px;">200</view>
 				</view>
 			</view>
 		</view>
@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
   // import type { PostInfo } from '@/types/post'
+  import { reactive, ref } from 'vue';
   import { usePostStore } from '@/stores/modules/post'
   const postStore = usePostStore()
   const props = defineProps({
@@ -40,11 +41,18 @@
   })
 
   const openPost = () => {
-    console.log(props.postInfo)
     if(props.postInfo != undefined) {
+      props.postInfo.createTime = createTime.value
       postStore.setPostInfo(props.postInfo)
     }
   }
+
+  var timestamp = Date.now();
+  var date = new Date(timestamp);
+  var year = date.getFullYear();
+  var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月份从 0 开始，因此要加 1
+  var day = ('0' + date.getDate()).slice(-2);
+  const createTime = ref(year + '-' + month + '-' + day)
 </script>
 
 <style>
