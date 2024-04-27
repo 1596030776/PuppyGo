@@ -35,3 +35,13 @@ export const postLoginWxMinSimpleAPI = (username: string) => {
     },
   })
 }
+
+export const loginByAccount = (username: string, password: string) => {
+  return http<LoginResult>({
+    method: 'POST',
+    url: `/authenticate/login?username=${username}&password=${password}`,
+    data: {
+      username,
+    },
+  })
+}

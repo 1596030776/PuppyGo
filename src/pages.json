@@ -115,6 +115,13 @@
           }
         },
         {
+          "path": "loginAccount/loginAccount",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTextStyle": "black"
+          }
+        },
+        {
           "path": "newPost/newPost",
           "style": {
             "navigationStyle": "custom",
