@@ -61,14 +61,14 @@
     "borderStyle": "white",
     "list": [
       {
-        "pagePath": "pages/postList/postList",
-        "iconPath": "static/navBar/post.png",
-        "selectedIconPath": "static/navBar/post(select).png"
-      },
-      {
         "pagePath": "pages/index/index",
         "iconPath": "static/navBar/home2.png",
         "selectedIconPath": "static/navBar/home2(select).png"
+      },
+      {
+        "pagePath": "pages/postList/postList",
+        "iconPath": "static/navBar/post.png",
+        "selectedIconPath": "static/navBar/post(select).png"
       },
       {
         "pagePath": "pages/robot/robot",
