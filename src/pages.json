@@ -52,7 +52,11 @@
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "app-plus": {
+			"bounce": "none"
+		}
+
   },
   // 设置 TabBar
   "tabBar": {
@@ -67,8 +71,8 @@
       },
       {
         "pagePath": "pages/postList/postList",
-        "iconPath": "static/navBar/post.png",
-        "selectedIconPath": "static/navBar/post(select).png"
+        "iconPath": "static/navBar/Blog.png",
+        "selectedIconPath": "static/navBar/Blog(s).png"
       },
       {
         "pagePath": "pages/robot/robot",
@@ -77,8 +81,8 @@
       },
       {
         "pagePath": "pages/my/my",
-        "iconPath": "static/navBar/my.png",
-        "selectedIconPath": "static/navBar/my(s).png"
+        "iconPath": "static/navBar/user.png",
+        "selectedIconPath": "static/navBar/user(s).png"
       }
     ]
   },

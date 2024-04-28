@@ -52,18 +52,41 @@
               <view class="bot-content" v-if="item.botContent !== ''">
                 {{ item.botContent }}
               </view>
+              <view v-if="item.hasSelest" class="select-section">
+                <u-divider text="" textPosition="center"
+                style="background-color: #eef4ff;">请选择宠物</u-divider>
+                <u-tabs fontSize="22"
+                :current="currentPet"
+                class="pet-tab" :list="petStore.petsInfo"
+                @click="initConservation"></u-tabs>
+              </view>
+              <view v-if="item.isAnswer">
+                <u-line length="80%"></u-line>
+                <view class="matter-add-row">
+                  <view class="add-matter">
+                  将该回答加入宠物事项
+                  </view>
+                  <checkbox
+                  style="border-radius: 50%;"
+                    v-if="item.isAnswer"
+                    @tap="addToMatters(item.fragmentId)"
+                    :value="item.value"
+                    :checked="item.checked"
+                  />
+                </view>
+              </view>
             </view>
             <!-- 加入事项 -->
-            <checkbox
+            <!-- <checkbox
               v-if="item.isAnswer"
               @tap="addToMatters(item.fragmentId)"
               :value="item.value"
               :checked="item.checked"
-            />
+            /> -->
           </view>
         </view>
         <!-- 宠物选择框 -->
-        <view>
+        <!-- <view>
           <view class="pets-container" v-if="!chatStore.conservation">
             <view class="pet-bar">
               <view
@@ -76,7 +99,7 @@
               </view>
             </view>
           </view>
-        </view>
+        </view> -->
       </view>
     </scroll-view>
     <!-- 底部消息发送栏 -->
@@ -113,7 +136,7 @@
   </view>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import {
   initConservationAPI,
@@ -148,6 +171,7 @@ const msgList = ref([
     imageUrl: '',
     userContent: '',
     isAnswer: false,
+    hasSelest:false,
   },
   {
     botContent: `请问你要针对哪只宠物进行咨询呢？`,
@@ -155,10 +179,29 @@ const msgList = ref([
     imageUrl: '',
     userContent: '',
     isAnswer: false,
+    hasSelest:true,
   },
 ])
-
 const pictureSelected = ref(false)
+const currentPet = ref(-1)
+const data = reactive({
+  switch:true
+})
+
+const asyncChange = (e) => {
+  console.log("这是点",e)
+  uni.showModal({
+    content: e ? '确定要将此回答加入事项？' : '确定要将此回答从事项中删除？',
+    success: (res) => {
+      console.log("这是确定的",res.confirm)
+      if (res.confirm) {
+        data.switch = !e
+        console.log("结果",data.switch)
+      }
+    }
+  })
+}
+
 
 const onChoosePhone = () => {
   // 调用拍照/选择图片
@@ -205,7 +248,7 @@ const handleSend = async () => {
       fragmentId: 0,
       userContent: chatMsg.value,
       imageUrl: '',
-      isAnswer: true,
+      isAnswer: false,
     })
     if (filePath.value !== '') {
       console.log('发送图片',filePath.value)
@@ -243,8 +286,9 @@ const handleSend = async () => {
                   if(i===answerResult.result.answer.length-1){
                     clearInterval(charInterval)
                   }
-                  obj.value.botContent+=answerResult.result.answer[i];
-                  i+=1
+                  obj.value.botContent+=answerResult.result.answer[i]
+                  i += 1
+                  obj.value.isAnswer=true
                 }, 100)
 
               } else if (statueResult.result === 'GPT_TIMEOUT') {
@@ -282,8 +326,9 @@ const handleSend = async () => {
             if(i===answerResult.result.answer.length-1){
               clearInterval(charInterval)
             }
-            obj.value.botContent+=answerResult.result.answer[i];
-            i+=1
+            obj.value.botContent+=answerResult.result.answer[i]
+            i += 1
+            obj.value.isAnswer=true
           },100)
         }
       }, 2000)
@@ -308,16 +353,19 @@ const addToMatters = async (id) => {
   uni.showToast({ icon: 'success', title: '加入成功' })
   console.log('加入事项')
 }
-const initConservation = async (id, name) => {
-  petStore.curPet.id = id
-  const result = await initConservationAPI(id)
+const initConservation = async (item) => {
+  const index = item.target.id[11]
+  currentPet.value = index
+  petStore.curPet.id = petStore.petsInfo[index].id
+  const result = await initConservationAPI(petStore.petsInfo[index].id)
   chatStore.conservation = result.result
   msgList.value.push({
-    botContent: `你选择的宠物是${name}。`,
+    botContent: `你选择的宠物是${petStore.petsInfo[index].name}。`,
     fragmentId: 0,
     imageUrl: '',
     userContent: '',
     isAnswer: false,
+    hasSelect: false
   })
 }
 </script>
@@ -370,11 +418,11 @@ input {
         // background-color: greenyellow;
 
         .right {
-          background-color: #eef4ff;
+          background-color: #8ebfff;
           padding: 12rpx;
         }
         .left {
-          background-color: #518dfd;
+          background-color: #eef4ff;
           color: white;
         }
         // 聊天消息的三角形
@@ -387,7 +435,7 @@ input {
           left: 100%;
           top: 10px;
           border: 12rpx solid transparent;
-          border-left: 12rpx solid #eef4ff;
+          border-left: 12rpx solid #8ebfff;
         }
 
         .left::after {
@@ -414,6 +462,7 @@ input {
           font-family: PingFang SC;
           font-weight: 500;
           line-height: 42rpx;
+          color:black;
         }
 
         .avatar {
@@ -577,5 +626,23 @@ input {
 }
 .msglistview {
   padding-bottom: 130rpx;
+}
+
+/* 选择对话的宠物 */
+.select-section{
+  height: 100rpx;
+}
+.pet-tab{
+  background-color: #eef4ff !important;
+}
+
+/* 加入事项部分 */
+.matter-add-row{
+  margin-top: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 28rpx;
+  color:#5a5656;
 }
 </style>
