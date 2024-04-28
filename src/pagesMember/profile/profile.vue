@@ -115,7 +115,7 @@ const onSubmit = async () => {
       <view class="form-content">
         <view class="form-item">
           <text class="label">账号</text>
-          <text class="account">{{ profile?.account }}</text>
+          <text class="account">{{ profile?.username }}</text>
         </view>
         <view class="form-item">
           <text class="label">昵称</text>

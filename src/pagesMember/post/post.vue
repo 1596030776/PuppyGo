@@ -1,41 +1,15 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue'
   import { usePostStore } from '@/stores/modules/post'
+  import { useMemberStore } from '@/stores'
   // 获取屏幕边界到安全区域距离
   const { safeAreaInsets } = uni.getSystemInfoSync()
   const postStore = usePostStore()
   const postInfo = postStore.postInfo
+  const memberStore = useMemberStore()
 
   const detail = reactive({
-    commentList: [{
-      id: 1,
-      userId: 2,
-      userName: '天涯',
-      portrait: '../../static/images/1.png',
-      time: '2023年10月30日 14:20',
-      content: '明月天涯明月天涯明月天涯明月天涯明月天涯明月天涯明月天涯',
-    }, {
-      id: 2,
-      userId: 3,
-      userName: '明月',
-      portrait: '../../static/images/1.png',
-      time: '2023年10月30日 14:20',
-      content: '明月天涯明月天涯明月天涯明月天涯明月天涯明月天涯明月天涯',
-    }, {
-      id: 2,
-      userId: 3,
-      userName: '明月',
-      portrait: '../../static/images/1.png',
-      time: '2023年10月30日 14:20',
-      content: '明月天涯明月天涯明月天涯明月天涯明月天涯明月天涯明月天涯',
-    }, {
-      id: 2,
-      userId: 3,
-      userName: '明月',
-      portrait: '../../static/images/1.png',
-      time: '2023年10月30日 14:20',
-      content: '明月天涯明月天涯明月天涯明月天涯明月天涯明月天涯明月天涯',
-    }]
+    commentList: []
   })
 
   const comment = () => {
@@ -49,11 +23,27 @@
   const newComment = ref(''); // 用户输入的评论内容
 
   const submitComment = () => {
-    // 处理评论提交逻辑
-    console.log('提交评论:', newComment.value);
     // 清空输入框
+    const content = newComment.value;
+    // 获取当前时间戳
+    var timestamp = Date.now();
+    var date = new Date(timestamp);
+    var year = date.getFullYear();
+    var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月份从 0 开始，因此要加 1
+    var day = ('0' + date.getDate()).slice(-2);
+    var formattedDate = year + '-' + month + '-' + day;
+
+    const comment = {
+      id: 2,
+      userId: memberStore.profile.userId,
+      userName: memberStore.profile.nikename,
+      portrait: memberStore.profile.avatar,
+      time: "2024-4-28",
+      content: content
+    }
+    detail.commentList.push(comment)
     newComment.value = '';
-  };
+  }
 </script>
 
 <template>
@@ -75,7 +65,7 @@
     </view>
   </view>
 
-  <view>
+ <view>
     <comment-list :detail="detail" @reply="reply" @comment="comment"></comment-list>
   </view>
   <view style="height: 100upx"></view>
