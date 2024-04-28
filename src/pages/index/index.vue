@@ -17,8 +17,8 @@ import MyPetList from './components/MyPetList.vue'
       <view class="pet-matter-card">
         <view class="row-1">
           <view class="left">
-            <view class="matter-name">去宠物店除毛</view>
-            <view class="pet-name">如来</view>
+            <view class="matter-name">去宠物店剪指甲</view>
+            <view class="pet-name">毛毛</view>
           </view>
           <view class="right">
             <image mode="aspectFill" class="matter-image" src="../../static/images/logo_dog.png"></image>
@@ -30,7 +30,7 @@ import MyPetList from './components/MyPetList.vue'
         <view class="row-2">
           <view class="matter-item matter-time">
             <image mode="aspectFill" class="side-image" src="../../static/images/Calander.png"></image>
-            4月24日
+            4月28日
           </view>
           <view class="matter-item matter-during">
             <image mode="aspectFill" class="side-image" src="../../static/images/alarm.png"></image>

@@ -2,6 +2,7 @@
   import { reactive, ref } from 'vue'
   import { usePostStore } from '@/stores/modules/post'
   import { useMemberStore } from '@/stores'
+  import { onLoad, onShow } from "@dcloudio/uni-app"
   // 获取屏幕边界到安全区域距离
   const { safeAreaInsets } = uni.getSystemInfoSync()
   const postStore = usePostStore()
@@ -44,6 +45,11 @@
     detail.commentList.push(comment)
     newComment.value = '';
   }
+
+  onShow(() => {
+   console.log(postInfo)
+
+  })
 </script>
 
 <template>
@@ -51,7 +57,7 @@
   <view class="header">
     <image class="img" :src="postInfo.avatar"></image>
     <view class="auth">{{postInfo.nickname}}</view>
-    <view class="time">{{postInfo.createTime}}</view>
+    <view class="time">{{postInfo.createTime[0]}}年{{postInfo.createTime[1]}}月{{postInfo.createTime[2]}}日  {{postInfo.createTime[3]}}：{{postInfo.createTime[4]}}</view>
   </view>
   <view class="image">
     <image :src="postInfo.imageUrl" style="width: 100%; height: 450upx; margin-top: 8px;" mode="aspectFill" />

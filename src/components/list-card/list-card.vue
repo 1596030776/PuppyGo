@@ -6,7 +6,7 @@
 				<view class="auth">{{postInfo.nickname}}</view>
 <!-- 				<view class="leave">LV{{postInfo.leave}}</view>
 				<view class="tag">{{postInfo.tag}}</view> -->
-				<view class="time">{{postInfo.createTime}}</view>
+				<view class="time">{{postInfo.createTime[0]}}年{{postInfo.createTime[1]}}月{{postInfo.createTime[2]}}日  {{postInfo.createTime[3]}}：{{postInfo.createTime[4]}}</view>
 			</view>
 
 			<!-- <view class="content">{{postInfo.content}}....<view class="show">点击阅读详细</view>
@@ -23,7 +23,7 @@
         </view>
 				<view class="good">
 					<image class="icon-like" src="../../static/tabs/love.png"></image>
-					<view style="font-size: 12px;">200</view>
+					<view style="font-size: 12px;">0</view>
 				</view>
 			</view>
 		</view>
@@ -42,7 +42,8 @@
 
   const openPost = () => {
     if(props.postInfo != undefined) {
-      props.postInfo.createTime = createTime.value
+      // props.postInfo.createTime = createTime.value
+      console.log(props.postInfo)
       postStore.setPostInfo(props.postInfo)
     }
   }

@@ -54,7 +54,8 @@
     <view class="logo">
       <image src="../../static/images/logo_dog.png"></image>
     </view>
-    <view class="introduction">PuppyGo-你的智能宠物助手</view>
+    <view class="introduction">宠安康</view>
+    <view>基于多模态大模型的宠物健康管家</view>
     <view class="login">
       <!-- 小程序端授权登录 -->
       <!--      <button class="button phone" open-type="getPhoneNumber" @getphonenumber="onGetphonenumber">
