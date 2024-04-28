@@ -51,11 +51,11 @@
 
 <template>
   <view class="viewport">
-    <view class="logo">
+    <view class="logo" @tap="onGetphonenumberSimple">
       <image src="../../static/images/logo_dog.png"></image>
     </view>
     <view class="introduction">宠安康</view>
-    <view>基于多模态大模型的宠物健康管家</view>
+    <view class="introduction">基于多模态大模型的宠物健康管家</view>
     <view class="login">
       <!-- 小程序端授权登录 -->
       <!--      <button class="button phone" open-type="getPhoneNumber" @getphonenumber="onGetphonenumber">
@@ -72,9 +72,9 @@
         </view>
         <view class="options">
           <!-- 通用模拟登录 -->
-          <button @tap="onGetphonenumberSimple">
+          <!-- <button @tap="onGetphonenumberSimple">
             <text class="icon icon-phone">快捷登录</text>
-          </button>
+          </button> -->
         </view>
       </view>
       <view class="tips">登录/注册即视为你同意《服务条款》和《PuppyGo隐私协议》</view>
