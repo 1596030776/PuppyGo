@@ -68,7 +68,6 @@
                   </view>
                   <checkbox
                   style="border-radius: 50%;"
-                    v-if="item.isAnswer"
                     @tap="addToMatters(item.fragmentId)"
                     :value="item.value"
                     :checked="item.checked"
@@ -285,11 +284,11 @@ const handleSend = async () => {
                 const charInterval=setInterval(async ()=>{
                   if(i===answerResult.result.answer.length-1){
                     clearInterval(charInterval)
+                    obj.value.isAnswer=true
                   }
                   obj.value.botContent+=answerResult.result.answer[i]
                   i += 1
-                  obj.value.isAnswer=true
-                }, 100)
+                  }, 100)
 
               } else if (statueResult.result === 'GPT_TIMEOUT') {
                 clearInterval(intervalId)
@@ -321,14 +320,13 @@ const handleSend = async () => {
           // obj.value.botContent = answerResult.result.answer
           obj.value.botContent=''
           let i=0;
-          console.log(answerResult.result.answer)
           const charInterval=setInterval(async ()=>{
             if(i===answerResult.result.answer.length-1){
               clearInterval(charInterval)
+              obj.value.isAnswer=true
             }
             obj.value.botContent+=answerResult.result.answer[i]
             i += 1
-            obj.value.isAnswer=true
           },100)
         }
       }, 2000)

@@ -72,7 +72,7 @@
         <view class="options">
           <!-- 通用模拟登录 -->
           <button @tap="onGetphonenumberSimple">
-            <text class="icon icon-phone">模拟快捷登录</text>
+            <text class="icon icon-phone">快捷登录</text>
           </button>
         </view>
       </view>
