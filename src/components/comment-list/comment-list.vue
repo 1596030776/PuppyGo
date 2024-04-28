@@ -47,6 +47,7 @@
 								{{item.time}}
 							</view>
 						</view>
+
 						<view class="comment">
 							<span v-if="item.toUserName">回复<span
 									style="color: #f3cd34;font-weight: 600;">{{item.toUserName}}</span>：</span>
@@ -135,12 +136,13 @@
 
 					.name {
 						display: flex;
-						justify-content: space-between;
+						justify-content: flex-start;
 						margin-bottom: 6rpx;
 						color: #f3cd34;
 						font-weight: 600;
 
 						.time {
+              margin-top: 4rpx;
 							font-weight: normal;
 							font-size: 24rpx;
 							color: rgba(180, 180, 180, 1);

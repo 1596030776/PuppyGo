@@ -6,7 +6,7 @@
 				<view class="auth">{{postInfo.nickname}}</view>
 <!-- 				<view class="leave">LV{{postInfo.leave}}</view>
 				<view class="tag">{{postInfo.tag}}</view> -->
-				<view class="time">{{createTime}}</view>
+				<view class="time">{{postInfo.createTime}}</view>
 			</view>
 
 			<!-- <view class="content">{{postInfo.content}}....<view class="show">点击阅读详细</view>
@@ -46,13 +46,6 @@
       postStore.setPostInfo(props.postInfo)
     }
   }
-
-  var timestamp = Date.now();
-  var date = new Date(timestamp);
-  var year = date.getFullYear();
-  var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月份从 0 开始，因此要加 1
-  var day = ('0' + date.getDate()).slice(-2);
-  const createTime = ref(year + '-' + month + '-' + day)
 </script>
 
 <style>
