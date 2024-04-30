@@ -113,10 +113,10 @@ const onSubmit = async () => {
     <view class="form">
       <!-- 表单内容 -->
       <view class="form-content">
-        <view class="form-item">
+<!--        <view class="form-item">
           <text class="label">账号</text>
           <text class="account">{{ profile?.username }}</text>
-        </view>
+        </view> -->
         <view class="form-item">
           <text class="label">昵称</text>
           <input class="input" type="text" placeholder="请填写昵称" v-model="profile!.nickname" />
@@ -148,7 +148,7 @@ const onSubmit = async () => {
             <view class="placeholder" v-else>请选择日期</view>
           </picker>
         </view>
-        <view class="form-item">
+        <!-- <view class="form-item">
           <text class="label">城市</text>
           <picker
             class="picker"
@@ -159,7 +159,7 @@ const onSubmit = async () => {
             <view v-if="profile.fullLocation">{{ profile.fullLocation }}</view>
             <view class="placeholder" v-else>请选择城市</view>
           </picker>
-        </view>
+        </view> -->
         <view class="form-item">
           <text class="label">职业</text>
           <input class="input" type="text" placeholder="请填写职业" v-model="profile.profession" />
