@@ -28,19 +28,12 @@
     </view>
     <view v-if="showChat" class="chat">
       <scroll-view
-        :style="{ paddingTop: safeAreaInsets?.top + 'px', height: screenHeight + 'px' }"
         id="scrollview"
         scroll-y="true"
         :scroll-with-animation="true"
         class="scroll-view"
       >
-        <!-- <u-navbar
-          :title="title"
-          :autoBack="true"
-          @leftClick="goBackSelect()"
-        >
-        </u-navbar> -->
-        <uni-nav-bar :fixed="true" :border="false" left-icon="left" :title="title" @clickLeft="goBackSelect()" />
+        <uni-nav-bar :statusBar="true"  :fixed="true" :border="false" left-icon="left" :title="title" @clickLeft="goBackSelect()" />
         <!-- 聊天主体 -->
         <view class="chat-body msglistview">
           <!-- 聊天记录 -->

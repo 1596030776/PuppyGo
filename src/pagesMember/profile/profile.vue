@@ -125,11 +125,11 @@ const onSubmit = async () => {
           <text class="label">性别</text>
           <radio-group @change="onGenderChange">
             <label class="radio">
-              <radio value="男" color="#27ba9b" :checked="profile.gender === '男'" />
+              <radio value="男" :checked="profile.gender === '男'" />
               男
             </label>
             <label class="radio">
-              <radio value="女" color="#27ba9b" :checked="profile.gender === '女'" />
+              <radio value="女" :checked="profile.gender === '女'" />
               女
             </label>
           </radio-group>
@@ -148,18 +148,6 @@ const onSubmit = async () => {
             <view class="placeholder" v-else>请选择日期</view>
           </picker>
         </view>
-        <!-- <view class="form-item">
-          <text class="label">城市</text>
-          <picker
-            class="picker"
-            mode="region"
-            :value="profile.fullLocation?.split(' ')"
-            @change="onFullLocationChange"
-          >
-            <view v-if="profile.fullLocation">{{ profile.fullLocation }}</view>
-            <view class="placeholder" v-else>请选择城市</view>
-          </picker>
-        </view> -->
         <view class="form-item">
           <text class="label">职业</text>
           <input class="input" type="text" placeholder="请填写职业" v-model="profile.profession" />
@@ -297,7 +285,7 @@ page {
     color: #fff;
     border-radius: 80rpx;
     font-size: 30rpx;
-    background-color: #27ba9b;
+    background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
   }
 }
 </style>
