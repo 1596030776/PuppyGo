@@ -54,7 +54,7 @@
     <view class="logo" @tap="onGetphonenumberSimple">
       <image src="../../static/images/logo_dog.png"></image>
     </view>
-    <view class="introduction">宠安康</view>
+    <view class="introduction title">宠安康</view>
     <view class="introduction">基于多模态大模型的宠物健康管家</view>
     <view class="login">
       <!-- 小程序端授权登录 -->
@@ -120,6 +120,10 @@
     font-family: 阿里妈妈刀隶体 Regular;
     font-size: 42rpx;
     margin-bottom: 32rpx;
+  }
+
+  .title{
+    font-size: 63rpx;
   }
 
   .login {
