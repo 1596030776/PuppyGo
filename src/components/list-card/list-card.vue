@@ -1,34 +1,40 @@
 <template class="box-body">
-	<view class="box">
-		<view class="father-box">
-			<view class="header">
-				<image class="img" :src="postInfo.avatar"></image>
-				<view class="auth">{{postInfo.nickname}}</view>
-<!-- 				<view class="leave">LV{{postInfo.leave}}</view>
-				<view class="tag">{{postInfo.tag}}</view> -->
-				<view class="time">{{postInfo.createTime[0]}}年{{postInfo.createTime[1]}}月{{postInfo.createTime[2]}}日  {{postInfo.createTime[3]}}：{{postInfo.createTime[4]}}</view>
-			</view>
+  <view class="box">
+    <view class="father-box">
+      <view class="header">
+        <view>
+          <image class="img" :src="postInfo.avatar"></image>
+        </view>
+        <view class="auth">{{postInfo.nickname}}</view>
+        <view class="time">{{postInfo.createTime[0]}}年{{postInfo.createTime[1]}}月{{postInfo.createTime[2]}}日
+          {{postInfo.createTime[3]}}：{{postInfo.createTime[4]}}
+        </view>
+      </view>
 
-			<!-- <view class="content">{{postInfo.content}}....<view class="show">点击阅读详细</view>
-			</view> -->
-      <!-- <img :src="postInfo.image" alt="" /> -->
-      <navigator url="/pagesMember/post/post" hover-class="none">
-        <image :src="postInfo.imageUrl" style="width: 100%; height: 360upx;" mode="aspectFill" @click="openPost"/>
+      <navigator url="/pagesMember/post/post" hover-class="none" class="body" @click="openPost">
+        <view class="text">
+          <view class="title">
+            {{postInfo.title}}
+          </view>
+          <view class="content">
+            {{postInfo.content}}
+          </view>
+        </view>
+        <view>
+          <image :src="postInfo.imageUrl" style="width: 200upx; height: 200upx; border-radius: 10px" mode="aspectFill" />
+        </view>
       </navigator>
 
 
-			<view class="function">
-        <view class="title">
-          {{postInfo.title}}
-        </view>
+      <!-- <view class="function">
 				<view class="good">
 					<image class="icon-like" src="../../static/tabs/love.png"></image>
 					<view style="font-size: 12px;">0</view>
 				</view>
-			</view>
-		</view>
-	</view>
-
+			</view> -->
+    </view>
+    <hr />
+  </view>
 </template>
 
 <script setup lang="ts">
@@ -37,11 +43,11 @@
   import { usePostStore } from '@/stores/modules/post'
   const postStore = usePostStore()
   const props = defineProps({
-      postInfo: Object
+    postInfo: Object
   })
 
   const openPost = () => {
-    if(props.postInfo != undefined) {
+    if (props.postInfo != undefined) {
       // props.postInfo.createTime = createTime.value
       console.log(props.postInfo)
       postStore.setPostInfo(props.postInfo)
@@ -51,48 +57,70 @@
 
 <style>
   .header {
-    background-color: #2ea5ff;
-    border-radius: 19px 19px 0 0;
-    padding-bottom: 8px;
+    width: 100%;
+    display: flex;
+    align-items: center;
   }
 
-	.low{
-		margin-left: 5px;
-	}
+  .body {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
 
-	.father-box {
-		background-color: #FFFFFF;
-		box-shadow: #C8C7CC;
-		height: 580upx;
-		width: 93%;
-		margin: 20rpx auto;
-		border: 1px solid #999999;
-		border-radius: 20px;
-	}
+  .father-box {
+    background-color: #FFFFFF;
+    box-shadow: #C8C7CC;
+    width: 100%;
+  }
 
-	.img {
-		margin: 20upx 0px 20upx 50upx;
-		height: 90upx;
-		width: 90upx;
-		border-radius: 90upx;
-		border: 1px solid #007AFF;
-		display: inline-flex;
-	}
+  .img {
+    margin: 10px 10px 10upx 10upx;
+    height: 60upx;
+    width: 60upx;
+    border-radius: 90upx;
+    border: 1px solid #007AFF;
+    display: inline-flex;
+  }
 
-	.auth {
-		font-weight: bolder;
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 15px;
-		margin-top: -100upx;
-		margin-left: 170upx;
-    color: white;
-	}
+  .auth {
+    font-weight: bolder;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+  }
 
+  .time {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    display: inline-flex;
+    margin-left: 10px;
+  }
 
   .title {
     font-weight: bolder;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 17px;
+    display: -webkit-box;
+    width: 480upx;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .content {
+    display: block;
+    font-size: 14px;
+    color: #24292E;
+    font-style: italic;
+    text-indent: 1.5em;
+    width: 480upx;
+    margin-top: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .function {
@@ -102,86 +130,20 @@
     padding: 0 18px;
   }
 
-	.time {
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 12px;
-		display: inline-flex;
-		margin-left: 170upx;
-		margin-top: -20upx;
-		color: white;
-	}
+  .icon-like {
+    height: 35upx;
+    width: 35upx;
+  }
 
-	.leave {
-		font-size: 12px;
-		text-align: center;
-		background: #4CD964;
-		width: 75upx;
-		text-align: center;
-		height: 35upx;
-		border-radius: 20upx;
-		color: #F2F2F2;
-		margin-left: 250upx;
-		margin-top: -35upx;
-	}
-
-	.content {
-		display: block;
-		font-size: 14px;
-		color: #24292E;
-		font-style: italic;
-		margin-left: 60upx;
-		margin-right: 60upx;
-		margin-top: 18upx;
-		height: 250upx;
-		text-indent: 1.5em;
-	}
-
-	.nbsp {
-		margin-left: 25upx;
-	}
-
-	.icon-like {
-		height: 35upx;
-		width: 35upx;
-	}
-
-	.good {
+  .good {
     display: flex;
     align-items: center;
-	}
+  }
 
-	.good view {
-		font-size: 12px;
-		margin-left: 20upx;
-		color: #6D6D72;
-		text-align: center;
-	}
-
-	.hr {
-		width: 100%;
-		margin: 25upx auto;
-		margin-bottom: 0upx;
-		color: #AAAAAA;
-		border-color: #ececec;
-		border: 0.2rpx solid #999999;
-		height: 0.2px;
-	}
-
-	.show {
-		color: #0081FF;
-		margin-top: 12upx;
-	}
-
-	.tag {
-		font-size: 12px;
-		text-align: center;
-		background: #36BBFF;
-		width: 120upx;
-		text-align: center;
-		height: 35upx;
-		border-radius: 10upx;
-		color: #F2F2F2;
-		margin-left: 340upx;
-		margin-top: -33upx;
-	}
+  .good view {
+    font-size: 12px;
+    margin-left: 20upx;
+    color: #6D6D72;
+    text-align: center;
+  }
 </style>
