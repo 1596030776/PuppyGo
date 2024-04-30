@@ -48,8 +48,6 @@
 
   const openPost = () => {
     if (props.postInfo != undefined) {
-      // props.postInfo.createTime = createTime.value
-      console.log(props.postInfo)
       postStore.setPostInfo(props.postInfo)
     }
   }

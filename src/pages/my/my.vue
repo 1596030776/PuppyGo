@@ -1,11 +1,25 @@
 <script setup lang="ts">
 import { useMemberStore } from '@/stores'
 import { usePetStore } from '@/stores/modules/pet'
+import { onShow } from "@dcloudio/uni-app"
+import { ref } from 'vue'
+import { getMemberProfileAPI } from '@/services/profile'
+import type { ProfileDetail } from '@/types/member'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const memberStore = useMemberStore()
 const petStore = usePetStore()
+
+const profile = ref<ProfileDetail>({} as ProfileDetail)
+const getMemberProfileData = async () => {
+  const result = await getMemberProfileAPI()
+  profile.value = result.result
+}
+
+onShow(()=>{
+  getMemberProfileData()
+})
 
 </script>
 
@@ -15,13 +29,13 @@ const petStore = usePetStore()
     <view class="profile" :style="{ paddingTop: safeAreaInsets!.top + 'px' }">
       <view class="top-bar">个人资料</view>
       <!-- 情况1：已登录 -->
-      <view class="overview" v-if="memberStore.profile">
+      <view class="overview" v-if="profile">
         <navigator url="/pagesMember/profile/profile" hover-class="none">
-          <image class="avatar" mode="aspectFill" :src="memberStore.profile.avatar"></image>
+          <image class="avatar" mode="aspectFill" :src="profile.avatar"></image>
         </navigator>
         <view class="meta">
           <view class="nickname">{{
-            memberStore.profile!.nickname || memberStore.profile.nikename
+            profile.nickname
           }}</view>
         </view>
         <navigator class="extra" url="/pagesMember/profile/profile" hover-class="none">
@@ -78,11 +92,11 @@ const petStore = usePetStore()
       </view>
       <view class="data-item">
         <image class="data-image" src="../../static/images/tongzhi.png"> </image>
-        <view class="data-data">23</view>
+        <view class="data-data">{{profile.conversationTime}}</view>
         <view class="data-danwei">次</view> </view
       ><view class="data-item">
         <image class="data-image" src="../../static/images/eye.png"> </image>
-        <view class="data-data">26</view>
+        <view class="data-data">{{profile.createTime}}</view>
         <view class="data-danwei">天</view>
       </view>
     </view>
