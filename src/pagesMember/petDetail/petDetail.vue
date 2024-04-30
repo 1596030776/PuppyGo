@@ -52,7 +52,7 @@
                     item.finishTime[0]
                   }}.{{ item.finishTime[1] }}.{{ item.finishTime[2] }}</view
                 >
-                <view class="cishu">{{ item.implementationCycleByDay }}天/次</view>
+                <view class="cishu" v-if="item.onlyOnce === false">{{ item.implementationCycleByDay }}天/次</view>
               </view>
               <view class="matter-name">{{ item.title }}</view>
               <view class="matter-detail">{{ item.content }}</view>

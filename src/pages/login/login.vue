@@ -3,7 +3,7 @@
   import { getPetNewsAPI } from '@/services/pet'
   import { useMemberStore } from '@/stores'
   import { usePetStore } from '@/stores/modules/pet'
-  import { getPetInfoAPI } from '@/services/pet'
+  import { getPetInfoAPI ,getPetMatterTodayAPI} from '@/services/pet'
   import { onLoad } from '@dcloudio/uni-app'
 
   // 获取 code 登录凭证
@@ -35,6 +35,9 @@
     petStore.setPetsInfo(result2.result.pets)
     const result3 = await getPetNewsAPI()
     petStore.newsList = result3.result.splice(0, 3)
+    console.log("今日事项获取***************************")
+    const result4 = getPetMatterTodayAPI()
+    petStore.todayList=(await result4).result
     setTimeout(() => {
       // 页面跳转
       uni.switchTab({ url: '/pages/my/my' })

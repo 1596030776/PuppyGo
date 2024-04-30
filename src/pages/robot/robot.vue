@@ -1,135 +1,143 @@
 <template>
-  <view class="chat">
-    <scroll-view
-      :style="{ paddingTop: safeAreaInsets?.top + 'px', height: screenHeight + 'px' }"
-      id="scrollview"
-      scroll-y="true"
-      :scroll-with-animation="true"
-      class="scroll-view"
-    >
-      <u-navbar
-        title="PetCareRobot"
-        :autoBack="false"
+  <view>
+    <view v-if="!showChat" class="select-actor">
+      <scroll-view
+        :style="{ paddingTop: safeAreaInsets?.top + 'px', height: screenHeight + 'px' }"
+        id="scrollview"
+        scroll-y="true"
+        :scroll-with-animation="true"
+        class="scroll-view"
       >
-      </u-navbar>
-      <!-- 聊天主体 -->
-      <view class="chat-body msglistview">
-        <!-- 聊天记录 -->
-        <view v-for="(item, index) in msgList" :key="index">
-          <!-- 用户会话框 -->
-          <view class="item self" v-if="item.userContent != ''">
-            <view class="content right">
-              <view class="user-content">
-                <image v-if="item.imageUrl!==''" class="catalog-img" :src="item.imageUrl" mode="aspectFill" />
-                <!-- <image :src="item.imageUrl" mode="aspectFill" /> -->
-                {{ item.userContent }}
-              </view>
+        <view class="please-select">请选择你的宠物机器人:</view>
+        <view class="cards">
+          <view class="card" :background="robot.background" v-for="robot in robots" v-key="robot.index">
+            <view class="card-title">
+              <image class="card-avatar" :src="robot.img" />
+              <view class="card-name">
+              {{robot.name}}</view>
             </view>
-            <view class="avatar">
-              <image :src="memberStore.profile.avatar" mode="aspectFill"
-            /></view>
+            <view class="small-desc">
+              {{robot.content}}
+            </view>
+            <view class="go-corner" @click="selectRobot(robot)">
+              <view class="go-arrow">→</view>
+            </view>
           </view>
-          <!-- 机器人对话框 -->
-          <view class="item Ai">
-            <view class="avatar">
-              <image src="../../static/images/robot.png" mode="aspectFit" />
-            </view>
-            <view class="content left">
-              <view class="load-6" v-if="item.botContent === ''">
-                <view class="letter-holder">
-                  <view class="l-1 letter">L</view>
-                  <view class="l-2 letter">o</view>
-                  <view class="l-3 letter">a</view>
-                  <view class="l-4 letter">d</view>
-                  <view class="l-5 letter">i</view>
-                  <view class="l-6 letter">n</view>
-                  <view class="l-7 letter">g</view>
-                  <view class="l-8 letter">.</view>
-                  <view class="l-9 letter">.</view>
-                  <view class="l-10 letter">.</view>
+        </view>
+      </scroll-view>
+    </view>
+    <view v-if="showChat" class="chat">
+      <scroll-view
+        :style="{ paddingTop: safeAreaInsets?.top + 'px', height: screenHeight + 'px' }"
+        id="scrollview"
+        scroll-y="true"
+        :scroll-with-animation="true"
+        class="scroll-view"
+      >
+        <!-- <u-navbar
+          :title="title"
+          :autoBack="true"
+          @leftClick="goBackSelect()"
+        >
+        </u-navbar> -->
+        <uni-nav-bar :fixed="true" :border="false" left-icon="left" :title="title" @clickLeft="goBackSelect()" />
+        <!-- 聊天主体 -->
+        <view class="chat-body msglistview">
+          <!-- 聊天记录 -->
+          <view v-for="(item, index) in data.msgList" :key="index">
+            <!-- 用户会话框 -->
+            <view class="item self" v-if="item.userContent != ''">
+              <view class="content right">
+                <view class="user-content">
+                  <image v-if="item.imageUrl!==''" class="catalog-img" :src="item.imageUrl" mode="aspectFill" />
+                  <!-- <image :src="item.imageUrl" mode="aspectFill" /> -->
+                  {{ item.userContent }}
                 </view>
               </view>
-              <view class="bot-content" v-if="item.botContent !== ''">
-                {{ item.botContent }}
+              <view class="avatar">
+                <image :src="memberStore.profile.avatar" mode="aspectFill"
+              /></view>
+            </view>
+            <!-- 机器人对话框 -->
+            <view class="item Ai">
+              <view class="avatar">
+                <image :src="robotAvator" mode="aspectFit" />
               </view>
-              <view v-if="item.hasSelest" class="select-section">
-                <u-divider text="" textPosition="center"
-                style="background-color: #eef4ff;">请选择宠物</u-divider>
-                <u-tabs fontSize="22"
-                :current="currentPet"
-                class="pet-tab" :list="petStore.petsInfo"
-                @click="initConservation"></u-tabs>
-              </view>
-              <view v-if="item.isAnswer">
-                <u-line length="80%"></u-line>
-                <view class="matter-add-row">
-                  <view class="add-matter">
-                  将该回答加入宠物事项
+              <view class="content left">
+                <view class="load-6" v-if="item.botContent === ''">
+                  <view class="letter-holder">
+                    <view class="l-1 letter">L</view>
+                    <view class="l-2 letter">o</view>
+                    <view class="l-3 letter">a</view>
+                    <view class="l-4 letter">d</view>
+                    <view class="l-5 letter">i</view>
+                    <view class="l-6 letter">n</view>
+                    <view class="l-7 letter">g</view>
+                    <view class="l-8 letter">.</view>
+                    <view class="l-9 letter">.</view>
+                    <view class="l-10 letter">.</view>
                   </view>
-                  <checkbox
-                  style="border-radius: 50%;"
-                    @tap="addToMatters(item.fragmentId)"
-                    :value="item.value"
-                    :checked="item.checked"
-                  />
+                </view>
+                <view class="bot-content" v-if="item.botContent !== ''">
+                  {{ item.botContent }}
+                </view>
+                <view v-if="item.hasSelest" class="select-section">
+                  <u-divider text="" textPosition="center"
+                  style="background-color: #eef4ff;">请选择宠物</u-divider>
+                  <u-tabs fontSize="22"
+                  :current="currentPet"
+                  class="pet-tab" :list="petStore.petsInfo"
+                  @click="initConservation"></u-tabs>
+                </view>
+                <view v-if="item.isAnswer">
+                  <u-line length="80%"></u-line>
+                  <view class="matter-add-row">
+                    <view class="add-matter">
+                    将该回答加入宠物事项
+                    </view>
+                    <checkbox
+                    style="border-radius: 50%;"
+                      @tap="addToMatters(item.fragmentId)"
+                      :value="item.value"
+                      :checked="item.checked"
+                    />
+                  </view>
                 </view>
               </view>
             </view>
-            <!-- 加入事项 -->
-            <!-- <checkbox
-              v-if="item.isAnswer"
-              @tap="addToMatters(item.fragmentId)"
-              :value="item.value"
-              :checked="item.checked"
-            /> -->
           </view>
         </view>
-        <!-- 宠物选择框 -->
-        <!-- <view>
-          <view class="pets-container" v-if="!chatStore.conservation">
-            <view class="pet-bar">
-              <view
-                class="pet-item"
-                v-for="(item, j) in petStore.petsInfo"
-                :key="j"
-                @tap="initConservation(item.id, item.name)"
-              >
-                <image class="pet-avator" :src="item.picture" mode="aspectFill" />
-              </view>
-            </view>
+      </scroll-view>
+      <!-- 底部消息发送栏 -->
+      <!-- 用来占位，防止聊天消息被发送框遮挡 -->
+      <view class="chat-bottom">
+        <view class="send-msg">
+          <view class="uni-textarea">
+            <input
+              v-model="chatMsg"
+              maxlength="300"
+              :show-confirm-bar="false"
+              auto-height
+            />
           </view>
-        </view> -->
-      </view>
-    </scroll-view>
-    <!-- 底部消息发送栏 -->
-    <!-- 用来占位，防止聊天消息被发送框遮挡 -->
-    <view class="chat-bottom">
-      <view class="send-msg">
-        <view class="uni-textarea">
-          <input
-            v-model="chatMsg"
-            maxlength="300"
-            :show-confirm-bar="false"
-            auto-height
-          />
-        </view>
-        <button @click="handleSend" class="send-btn">
+          <button @click="handleSend" class="send-btn">
+            <image
+              class="send-button-pic"
+              mode="aspectFill"
+              src="../../static/images/send.png"
+            ></image>
+          </button>
           <image
-            class="send-button-pic"
+            @tap="onChoosePhone"
+            class="send-picture"
             mode="aspectFill"
-            src="../../static/images/send.png"
+            :src="
+              !pictureSelected
+                ? '../../static/images/ts-picture.png'
+                : '../../static/images/picture.png'
+            "
           ></image>
-        </button>
-        <image
-          @tap="onChoosePhone"
-          class="send-picture"
-          mode="aspectFill"
-          :src="
-            !pictureSelected
-              ? '../../static/images/ts-picture.png'
-              : '../../static/images/picture.png'
-          "
-        ></image>
+        </view>
       </view>
     </view>
   </view>
@@ -159,7 +167,11 @@ const scrollTop = 0
 const userId = ref('')
 //发送的消息
 const chatMsg = ref('')
-const msgList = ref([
+const pictureSelected = ref(false)
+const currentPet = ref(-1)
+const data = reactive({
+  switch: true,
+  msgList:[
   {
     botContent: `我是一个基于大模型的宠物助手机器人，我可以帮助你提供一些建议。你可以这样问我：\n
       "我该如何训练我的狗狗"\n
@@ -180,13 +192,80 @@ const msgList = ref([
     isAnswer: false,
     hasSelest:true,
   },
-])
-const pictureSelected = ref(false)
-const currentPet = ref(-1)
-const data = reactive({
-  switch:true
+]
 })
+const showChat = ref(false);
+const title = ref("")
+const robotAvator=ref("../../static/images/robot.png")
 
+const robots = ref([{
+  name: '宠物营养师',
+  content: '宠物营养师机器人致力于提供最佳的营养建议，确保您的宠物拥有健康、均衡的饮食。',
+  img: "../../static/avators/healther.png",
+  background:"linear-gradient(to bottom, #c3e6ec, #a7d1d9)"
+  },
+  {
+  name: '宠物情绪助手',
+    content: '宠物情绪助手机器人是您的忠实陪伴，专注于解读和照顾您宠物的情绪状态。',
+    img: "../../static/avators/xinlier.png",
+    background:"linear-gradient(to bottom, #aaf5b0, #cdfab9)"},
+  {
+  name: '宠物健康助手',
+    content: '宠物健康助手机器人是您宠物健康的最佳伙伴，为您提供全面的健康管理服务。',
+  img:"../../static/avators/doctor.png",background:"linear-gradient(to bottom, #f7ffc3, #ffffe2)"},
+
+  {
+  name: '宠物训练助手',
+    content: '宠物训练助手机器人是您的专业训练师，致力于帮助您培养出听话、礼貌的宠物。',
+    img: "../../static/avators/trainer.png", background: "linear-gradient(to bottom, #ead2ff, #f6dffd)"
+  }])
+
+
+const goBackSelect = () => {
+  showChat.value = false
+  currentPet.value = -1
+  data.msgList=[
+  {
+    botContent: `我是一个基于大模型的宠物助手机器人，我可以帮助你提供一些建议。你可以这样问我：\n
+      "我该如何训练我的狗狗"\n
+      "我的狗狗最近食欲不振，有什么办法可以帮助他？"\n
+      "我的狗出去玩的时候被划伤了，现在血流不止，我该怎么办？"\n
+      你还可以给我传送图片，以帮助我更好的了解宠物的信息。希望能帮到你！\n`,
+    fragmentId: 0,
+    imageUrl: '',
+    userContent: '',
+    isAnswer: false,
+    hasSelest:false,
+  },
+  {
+    botContent: `请问你要针对哪只宠物进行咨询呢？`,
+    fragmentId: 0,
+    imageUrl: '',
+    userContent: '',
+    isAnswer: false,
+    hasSelest:true,
+  },
+]
+}
+const selectRobot = (robot) => {
+  title.value = robot.name
+  showChat.value = true
+  robotAvator.value=robot.img
+  switch (robot.name) {
+    case '宠物营养师':
+      data.msgList[0].botContent = "我是您宠物的专属营养师！为了确保您的宠物拥有最佳的健康和活力，我将为它们提供量身定制的饮食方案，让它们吃得开心、吃得健康！"
+      break;
+    case '宠物情绪助手':
+      data.msgList[0].botContent = "嗨，我是宠物情绪助手！无论您的宠物是紧张、孤独还是兴奋，我都会在这里为它们提供安抚和关怀，让它们享受到无忧无虑的生活！"
+      break;
+    case '宠物健康助手':
+      data.msgList[0].botContent = "您好，我是宠物健康助手！我将帮助您管理宠物的健康，定期提醒您进行健康检查，并在紧急情况下提供及时的指导和支持，让您的宠物始终保持健康状态！"
+      break;
+    case '宠物训练助手':
+      data.msgList[0].botContent = "欢迎来到宠物训练助手的世界！我将与您一起制定个性化的训练计划，培养您的宠物成为听话、懂礼貌的小伙伴，让您的生活更加愉快！"
+      break;
+  }
+}
 const asyncChange = (e) => {
   console.log("这是点",e)
   uni.showModal({
@@ -231,7 +310,7 @@ const rpxTopx = (px) => {
 
 // 发送消息
 const handleSend = async () => {
-  if (!chatStore.conservation) {
+  if (currentPet.value==-1) {
     uni.showToast({ icon: 'error', title: '请先选择宠物' })
     return
   }
@@ -267,7 +346,7 @@ const handleSend = async () => {
             uni.showToast({ icon: 'success', title: '发送成功' })
             obj.value.fragmentId = fragmentId
             obj.value.imageUrl = filePath.value
-            msgList.value.push(obj.value)
+            data.msgList.push(obj.value)
             const intervalId = setInterval(async () => {
               const statueResult = await getStatue(fragmentId)
               if (statueResult.result === 'GPT_FINISHED') {
@@ -311,7 +390,7 @@ const handleSend = async () => {
     } else {
       const sentenceResult = await postFragment(chatStore.conservation.id, chatMsg.value)
       obj.value.fragmentId = sentenceResult.result
-      msgList.value.push(obj.value)
+      data.msgList.push(obj.value)
       const intervalId = setInterval(async () => {
         const statueResult = await getStatue(sentenceResult.result)
         if (statueResult.result === 'GPT_FINISHED') {
@@ -357,7 +436,7 @@ const initConservation = async (item) => {
   petStore.curPet.id = petStore.petsInfo[index].id
   const result = await initConservationAPI(petStore.petsInfo[index].id)
   chatStore.conservation = result.result
-  msgList.value.push({
+  data.msgList.push({
     botContent: `你选择的宠物是${petStore.petsInfo[index].name}。`,
     fragmentId: 0,
     imageUrl: '',
@@ -643,4 +722,110 @@ input {
   font-size: 28rpx;
   color:#5a5656;
 }
+/************* 卡片 ***************/
+.card-title {
+  color: #262626;
+  font-size: 1em;
+  line-height: normal;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+.card-avatar{
+  width: 68rpx;
+  height: 68rpx;
+  margin-right: 8rpx;
+}
+
+.small-desc {
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.2em;
+  color: #452c2c;
+}
+
+.small-desc {
+  font-size: 1em;
+}
+
+.go-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #6293c8, #384c6c);
+  border-radius: 0 4px 0 32px;
+}
+
+.go-arrow {
+  margin-top: -4px;
+  margin-right: -4px;
+  color: white;
+  font-family: courier, sans;
+}
+.cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  display: block;
+  position: relative;
+  width:46%;
+  height: 400rpx;
+  background-color: #f2f8f9;
+  border-radius: 10px;
+  padding: 2em 1.2em;
+  text-decoration: none;
+  z-index: 0;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 10rpx;
+}
+
+.card:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -16px;
+  right: -16px;
+  background: linear-gradient(135deg, #364a60, #384c6c);
+  height: 32px;
+  width: 32px;
+  border-radius: 32px;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: transform 0.35s ease-out;
+}
+
+.card:hover:before {
+  transform: scale(28);
+}
+
+.card:hover .small-desc {
+  transition: all 0.5s ease-out;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card:hover .card-title {
+  transition: all 0.5s ease-out;
+  color: #ffffff;
+}
+.please-select{
+  font-size: 46rpx;
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  margin-bottom: 32rpx;
+  margin-top: 34rpx;
+}
+
 </style>

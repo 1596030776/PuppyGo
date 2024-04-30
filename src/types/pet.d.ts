@@ -53,6 +53,25 @@ export type PetMatter = {
   startTime: string
   title: string
 }
+/* 今日宠物事项 */
+export type TodayMatter = {
+  classification: string
+  content: string
+  finishTime: string
+  id: number
+  implementationCycleByDay: string
+  onlyOnce: boolean
+  petId: number
+  startTime: string
+  title: string
+  createTime: string
+  petAvatar: string
+  petName: string
+  updateTime: string
+}
+
+export type TodayList=Array<TodayMatter>
+/**宠物清单列表 */
 
 export type PetMatterList = Array<PetMatter>
 export type PetMatterPara = {

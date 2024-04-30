@@ -1,44 +1,45 @@
 <script setup lang="ts">
 import CustomNavbar from './components/CustomNavbar.vue'
 import MyPetList from './components/MyPetList.vue'
+import { usePetStore } from '@/stores/modules/pet'
 
-// const navigateOut = (index: number) => {
-//   uni.navigateTo({ url: petStore.newsList![index].newsUrl })
-// }
+const petStore = usePetStore()
 </script>
 <template>
   <scroll-view class="viewport" scroll-y enable-back-to-top>
     <CustomNavbar></CustomNavbar>
-    <view class="title pet-matter">
-      近期事项
-      <image mode="aspectFill" class="title-image" src="../../static/images/list.png"></image>
-    </view>
-    <view class="matter-cards">
-      <view class="pet-matter-card">
-        <view class="row-1">
-          <view class="left">
-            <view class="matter-name">去宠物店剪指甲</view>
-            <view class="pet-name">毛毛</view>
+    <view class="matter-section" v-if="petStore.todayList!.length>0">
+      <view class="title pet-matter">
+        近期事项
+        <image mode="aspectFill" class="title-image" src="../../static/images/list.png"></image>
+      </view>
+      <view class="matter-cards">
+        <view class="pet-matter-card" v-for="card in petStore.todayList" :key="card.id">
+          <view class="row-1">
+            <view class="left">
+              <view class="matter-name">{{ card.title }}</view>
+              <view class="pet-name">{{ card.petName }}</view>
+            </view>
+            <view class="right">
+              <image mode="aspectFill" class="matter-image" :src="card.petAvatar"></image>
+            </view>
           </view>
-          <view class="right">
-            <image mode="aspectFill" class="matter-image" src="../../static/images/logo_dog.png"></image>
+          <view class="bar">
+            <view class="link-top"></view>
           </view>
-        </view>
-        <view class="bar">
-          <view class="link-top"></view>
-        </view>
-        <view class="row-2">
-          <view class="matter-item matter-time">
-            <image mode="aspectFill" class="side-image" src="../../static/images/Calander.png"></image>
-            4月28日
-          </view>
-          <view class="matter-item matter-during">
-            <image mode="aspectFill" class="side-image" src="../../static/images/alarm.png"></image>
-            15-25 分钟
-          </view>
-          <view class="matter-item matter-time">
-            <image mode="aspectFill" class="side-image" src="../../static/images/map.png"></image>
-            洪山区宠物店
+          <view class="row-2">
+            <view class="matter-item matter-time">
+              <image mode="aspectFill" class="side-image" src="../../static/images/Calander.png"></image>
+              {{ card.startTime }}
+            </view>
+            <view class="matter-item matter-during">
+              <image mode="aspectFill" class="side-image" src="../../static/images/alarm.png"></image>
+              30min
+            </view>
+            <view class="matter-item matter-time">
+              <image mode="aspectFill" class="side-image" src="../../static/images/map.png"></image>
+              茹莱宠物店
+            </view>
           </view>
         </view>
       </view>

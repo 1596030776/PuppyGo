@@ -1,4 +1,4 @@
-import type { PetInfoList, list, PetMatter, PetMatterPara, PetMatterList } from '@/types/pet'
+import type { PetInfoList, list, PetMatter, PetMatterPara, PetMatterList, TodayMatter, TodayList} from '@/types/pet'
 import { http } from '@/utils/http'
 
 //获取所有宠物新闻列表信息
@@ -42,5 +42,14 @@ export const getPetMatterAdviceAPI = async (fragmentId: string) => {
   return http<PetMatter>({
     method: 'GET',
     url: `/conversation/fragment/advice/${fragmentId}`,
+  })
+}
+
+//获取今日事项
+export const getPetMatterTodayAPI = async () => {
+  console.log("今日事项")
+  return http<TodayList>({
+    method: 'GET',
+    url: `/petmatters/today?pageNum=1&&pageSize=10`,
   })
 }
